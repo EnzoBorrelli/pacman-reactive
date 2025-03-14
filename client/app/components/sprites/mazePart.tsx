@@ -2,7 +2,7 @@ interface iMazePart {
   rotation: string;
   size: number;
   type: string;
-  isFlip: boolean;
+  isFlip?: boolean;
 }
 
 export default function MazePart({ rotation, size, type, isFlip }: iMazePart) {
