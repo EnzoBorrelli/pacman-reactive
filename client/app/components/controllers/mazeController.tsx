@@ -1,26 +1,27 @@
 import { useEffect } from "react";
-import { useMap } from "../../../providers/mapProvider";
 import TileController from "./tileController";
 import { classicMap } from "../maps/classic";
 import { smallMap } from "../maps/small";
+import { setMapTiles,setTileSize } from "~/store/mapSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "~/store";
 
 export default function MazeController({ map }:{map:string}) {
-  const { partsAttributes,setPartsAttributes, tileSize, setTileSize } = useMap();
+  const {tiles, size} = useSelector((state: RootState) => state.map);
+  const dispatch = useDispatch();
   useEffect(() => {
     switch (map) {
       case "challenge":
-        setPartsAttributes([
-          { type: "simpleWall", rotation: "right", position: { x: 500, y: 500 } },
-        ]);
+        setMapTiles(classicMap);
         break;
       case "classic":
-        setPartsAttributes(classicMap);
+        setMapTiles(classicMap);
         break;
       case "small":
-        setPartsAttributes(smallMap);
+        setMapTiles(smallMap);
         break;
       default:
-        setPartsAttributes(classicMap);
+        setMapTiles(classicMap);
         break;
     }
   }
@@ -43,14 +44,14 @@ export default function MazeController({ map }:{map:string}) {
 
   return (
     <>
-      {partsAttributes.map((part, index) => (
+      {tiles.map((part, index) => (
         <TileController
           key={index}
           position={part.position}
           type={part.type}
-          size={tileSize}
-          rotation={part.rotation}
-          isFlip={part.isFlip}
+          size={size}
+          rotation={part.direction}
+          isFlip={part.flip!}
         />
       ))}
     </>
