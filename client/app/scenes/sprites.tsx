@@ -1,9 +1,10 @@
-import React from "react";
 import Dot from "../components/sprites/dot";
 import Ghost from "../components/sprites/ghost";
 import Pacman from "../components/sprites/pacman";
 import Fruit from "../components/sprites/fruit";
 import MazePart from "../components/sprites/mazePart";
+import { CharacterSize, Direction } from "~/components/enums/global";
+import { PacState } from "~/components/enums/pacman";
 
 export default function Sprites() {
   return (
@@ -12,8 +13,8 @@ export default function Sprites() {
         Sprites Display
       </h2>
       <div className="flex items-center justify-center gap-6">
-        <Pacman size={48} direction="" state="eating" />
-        <Dot map="classic" />
+        <Pacman size={CharacterSize.small} direction={Direction.right} animation={PacState.chop} />
+        <Dot map="classic" isPower={false}/>
         <Dot map="classic" isPower={true} />
         <Ghost map="classic" ghost="inky" direction="up" state="walking" />
         <Ghost map="classic" ghost="blinky" direction="down" state="walking" />
