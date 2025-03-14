@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Pacman({ direction, size, animation }) {
-  let _direction; // If pacman is dying, rotate it 90 degrees
+interface iPacman {
+  direction: string;
+  size: number;
+  animation: string;
+}
+
+export default function Pacman({ direction, size, animation }: iPacman) {
+  let _direction: string; // If pacman is dying, rotate it 90 degrees
 
   //controls the direction
   switch (direction) {

@@ -1,10 +1,15 @@
-import React from "react";
+interface iMazePart {
+  rotation: string;
+  size: number;
+  type: string;
+  isFlip: boolean;
+}
 
-export default function MazePart({ rotation, size, type,isFlip }) {
+export default function MazePart({ rotation, size, type, isFlip }: iMazePart) {
   let flip = isFlip ? "scale-x-[-1]" : "";
-  let mazePart = `/assets/sprites/map/${type}.png`
+  let mazePart = `/assets/sprites/map/${type}.png`;
 
-  let _rotation;
+  let _rotation: string;
 
   switch (rotation) {
     case "left":
@@ -25,14 +30,8 @@ export default function MazePart({ rotation, size, type,isFlip }) {
       break;
   }
   return (
-    <div
-      className={`${_rotation} ${flip}`}
-    >
-      <img
-        style={{ width: size, height: size }}
-        src={mazePart}
-        alt="fruit"
-      />
+    <div className={`${_rotation} ${flip}`}>
+      <img style={{ width: size, height: size }} src={mazePart} alt="fruit" />
     </div>
   );
 }

@@ -1,6 +1,9 @@
-import React from "react";
+interface iDot {
+  map: string;
+  isPower: boolean;
+}
 
-export default function Dot({ map, isPower }) {
+export default function Dot({ map, isPower }: iDot) {
   let size;
   switch (map) {
     case "challenge":

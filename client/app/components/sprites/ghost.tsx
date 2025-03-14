@@ -1,6 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Ghost({ ghost, map, direction, state }) {
+interface iGhost {
+  ghost: string;
+  map: string;
+  direction: string;
+  state: string;
+}
+
+export default function Ghost({ ghost, map, direction, state }: iGhost) {
   let _direction = `/assets/sprites/ghosts/eyes/${direction}.png`;
   let size = "size-[32px]";
 
@@ -19,7 +26,7 @@ export default function Ghost({ ghost, map, direction, state }) {
       break;
   }
 
-  function WalkAnimation(_ghost, interval = 150) {
+  function WalkAnimation(_ghost: string, interval = 150) {
     const [currentFrame, setCurrentFrame] = useState(1);
 
     useEffect(() => {

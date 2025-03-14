@@ -1,6 +1,9 @@
-import React from "react";
+interface iFruit {
+  map: string;
+  ID: number;
+}
 
-export default function Fruit({ map,ID }) {
+export default function Fruit({ map, ID }: iFruit) {
   let size;
   let fruit = `/assets/sprites/fruits/fruit_${ID}.png`;
   switch (map) {
@@ -19,11 +22,7 @@ export default function Fruit({ map,ID }) {
   }
   return (
     <div>
-      <img
-        className={size}
-        src={fruit}
-        alt="fruit"
-      />
+      <img className={size} src={fruit} alt="fruit" />
     </div>
   );
 }
