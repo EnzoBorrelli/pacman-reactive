@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useMap } from "../../../providers/mapProvider";
 import TileController from "./tileController";
 import { classicMap } from "../maps/classic";
 import { smallMap } from "../maps/small";
 
-export default function MazeController({ map }) {
+export default function MazeController({ map }:{map:string}) {
   const { partsAttributes,setPartsAttributes, tileSize, setTileSize } = useMap();
   useEffect(() => {
     switch (map) {
