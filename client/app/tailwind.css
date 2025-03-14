@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+  font-family: 'PacFont';
+  src: url('/fonts/pacFont.ttf') format('truetype');
+}
+
+:root {
+  font-family: 'PacFont', sans-serif;
+}
