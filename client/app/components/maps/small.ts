@@ -362,57 +362,57 @@ export const smallMap: Tile[] = [
   {
     type: Tiles.doubleWall,
     direction: Direction.left,
-    position: { x: 0, y: 96},
+    position: { x: 0, y: 96 },
   },
   {
     type: Tiles.simpleCorner,
     direction: Direction.down,
-    position: { x: 48, y: 96},
+    position: { x: 48, y: 96 },
   },
   {
     type: Tiles.simpleWall,
     direction: Direction.down,
-    position: { x: 72, y: 96},
+    position: { x: 72, y: 96 },
   },
   {
     type: Tiles.simpleWall,
     direction: Direction.down,
-    position: { x: 96, y: 96},
+    position: { x: 96, y: 96 },
   },
   {
     type: Tiles.simpleWall,
     direction: Direction.down,
-    position: { x: 120, y: 96},
-  },
-  {
-    type: Tiles.simpleCorner,
-    direction: Direction.right,
-    position: { x: 144, y: 96},
-  },
-  {
-    type: Tiles.simpleCorner,
-    direction: Direction.down,
-    position: { x: 192, y: 96},
-  },
-  {
-    type: Tiles.simpleWall,
-    direction: Direction.down,
-    position: { x: 216, y: 96},
-  },
-  {
-    type: Tiles.simpleWall,
-    direction: Direction.down,
-    position: { x: 240, y: 96},
-  },
-  {
-    type: Tiles.simpleWall,
-    direction: Direction.down,
-    position: { x: 264, y: 96},
+    position: { x: 120, y: 96 },
   },
   {
     type: Tiles.simpleCorner,
     direction: Direction.right,
-    position: { x: 288, y: 96},
+    position: { x: 144, y: 96 },
+  },
+  {
+    type: Tiles.simpleCorner,
+    direction: Direction.down,
+    position: { x: 192, y: 96 },
+  },
+  {
+    type: Tiles.simpleWall,
+    direction: Direction.down,
+    position: { x: 216, y: 96 },
+  },
+  {
+    type: Tiles.simpleWall,
+    direction: Direction.down,
+    position: { x: 240, y: 96 },
+  },
+  {
+    type: Tiles.simpleWall,
+    direction: Direction.down,
+    position: { x: 264, y: 96 },
+  },
+  {
+    type: Tiles.simpleCorner,
+    direction: Direction.right,
+    position: { x: 288, y: 96 },
   },
   {
     type: Tiles.miniCorner,
@@ -427,58 +427,58 @@ export const smallMap: Tile[] = [
   {
     type: Tiles.simpleCorner,
     direction: Direction.down,
-    position: { x: 408, y: 96},
+    position: { x: 408, y: 96 },
   },
   {
     type: Tiles.simpleWall,
     direction: Direction.down,
-    position: { x: 432, y: 96},
+    position: { x: 432, y: 96 },
   },
   {
     type: Tiles.simpleWall,
     direction: Direction.down,
-    position: { x: 456, y: 96},
+    position: { x: 456, y: 96 },
   },
   {
     type: Tiles.simpleWall,
     direction: Direction.down,
-    position: { x: 480, y: 96},
+    position: { x: 480, y: 96 },
   },
-  
+
   {
     type: Tiles.simpleCorner,
     direction: Direction.right,
-    position: { x: 504, y: 96},
+    position: { x: 504, y: 96 },
   },
   {
     type: Tiles.simpleCorner,
     direction: Direction.down,
-    position: { x: 552, y: 96},
+    position: { x: 552, y: 96 },
   },
   {
     type: Tiles.simpleWall,
     direction: Direction.down,
-    position: { x: 576, y: 96},
+    position: { x: 576, y: 96 },
   },
   {
     type: Tiles.simpleWall,
     direction: Direction.down,
-    position: { x: 600, y: 96},
+    position: { x: 600, y: 96 },
   },
   {
     type: Tiles.simpleWall,
     direction: Direction.down,
-    position: { x: 624, y: 96},
+    position: { x: 624, y: 96 },
   },
   {
     type: Tiles.simpleCorner,
     direction: Direction.right,
-    position: { x: 648, y: 96},
+    position: { x: 648, y: 96 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.right,
-    position: { x: 696, y: 96},
+    position: { x: 696, y: 96 },
   },
   //** sixth row
   {
@@ -541,48 +541,48 @@ export const smallMap: Tile[] = [
   {
     type: Tiles.rectangle,
     direction: Direction.left,
-    position: { x: 264, y: 144},
+    position: { x: 264, y: 144 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.down,
-    position: { x: 288, y: 144},
+    position: { x: 288, y: 144 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.down,
-    position: { x: 312, y: 144},
+    position: { x: 312, y: 144 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.down,
-    position: { x: 336, y: 144},
+    position: { x: 336, y: 144 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.down,
-    position: { x: 360, y: 144},
+    position: { x: 360, y: 144 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.down,
-    position: { x: 384, y: 144},
+    position: { x: 384, y: 144 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.down,
-    position: { x: 408, y: 144},
+    position: { x: 408, y: 144 },
   },
   {
     type: Tiles.rectangle,
     direction: Direction.left,
-    position: { x: 432, y: 144},
-    flip:true
+    position: { x: 432, y: 144 },
+    flip: true,
   },
   {
     type: Tiles.miniCorner,
     direction: Direction.left,
-    position: { x:480, y: 144 },
+    position: { x: 480, y: 144 },
   },
   {
     type: Tiles.miniCorner,
@@ -970,42 +970,42 @@ export const smallMap: Tile[] = [
   {
     type: Tiles.squareCorner,
     direction: Direction.down,
-    position: { x: 264, y: 288},
+    position: { x: 264, y: 288 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.up,
-    position: { x: 288, y: 288},
+    position: { x: 288, y: 288 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.up,
-    position: { x: 312, y: 288},
+    position: { x: 312, y: 288 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.up,
-    position: { x: 336, y: 288},
+    position: { x: 336, y: 288 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.up,
-    position: { x: 360, y: 288},
+    position: { x: 360, y: 288 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.up,
-    position: { x: 384, y: 288},
+    position: { x: 384, y: 288 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.up,
-    position: { x: 408, y: 288},
+    position: { x: 408, y: 288 },
   },
   {
     type: Tiles.squareCorner,
     direction: Direction.right,
-    position: { x: 432, y: 288},
+    position: { x: 432, y: 288 },
   },
   {
     type: Tiles.simpleWall,
@@ -1093,7 +1093,7 @@ export const smallMap: Tile[] = [
     type: Tiles.miniCorner,
     direction: Direction.right,
     position: { x: 192, y: 336 },
-    flip:true
+    flip: true,
   },
   {
     type: Tiles.miniCorner,
@@ -1103,49 +1103,49 @@ export const smallMap: Tile[] = [
   {
     type: Tiles.rectangle,
     direction: Direction.right,
-    position: { x: 264, y: 336},
-    flip:true
+    position: { x: 264, y: 336 },
+    flip: true,
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.up,
-    position: { x: 288, y: 336},
+    position: { x: 288, y: 336 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.up,
-    position: { x: 312, y: 336},
+    position: { x: 312, y: 336 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.up,
-    position: { x: 336, y: 336},
+    position: { x: 336, y: 336 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.up,
-    position: { x: 360, y: 336},
+    position: { x: 360, y: 336 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.up,
-    position: { x: 384, y: 336},
+    position: { x: 384, y: 336 },
   },
   {
     type: Tiles.doubleWall,
     direction: Direction.up,
-    position: { x: 408, y: 336},
+    position: { x: 408, y: 336 },
   },
   {
     type: Tiles.rectangle,
     direction: Direction.right,
-    position: { x: 432, y: 336},
+    position: { x: 432, y: 336 },
   },
   {
     type: Tiles.miniCorner,
     direction: Direction.right,
     position: { x: 480, y: 336 },
-    flip:true
+    flip: true,
   },
   {
     type: Tiles.miniCorner,
@@ -1254,6 +1254,16 @@ export const smallMap: Tile[] = [
     direction: Direction.up,
     position: { x: 288, y: 384 },
   },
+  {
+    type: Tiles.miniCorner,
+    direction: Direction.left,
+    position: { x: 336, y: 384 },
+  },
+  {
+    type: Tiles.miniCorner,
+    direction: Direction.up,
+    position: { x: 360, y: 384 },
+  },
 
   {
     type: Tiles.simpleCorner,
@@ -1337,13 +1347,13 @@ export const smallMap: Tile[] = [
     position: { x: 288, y: 408 },
   },
   {
-    type: Tiles.miniCorner,
-    direction: Direction.left,
+    type: Tiles.simpleWall,
+    direction: Direction.right,
     position: { x: 336, y: 408 },
   },
   {
-    type: Tiles.miniCorner,
-    direction: Direction.up,
+    type: Tiles.simpleWall,
+    direction: Direction.left,
     position: { x: 360, y: 408 },
   },
   {
