@@ -6,9 +6,9 @@ export enum Direction {
 }
 
 export enum CharacterSize {
-  challenge = 16,
-  classic = 32,
-  small = 48,
+  challenge = 12,
+  classic = 24,
+  small = 36,
 }
 
 export enum objectSize {
