@@ -70,7 +70,7 @@ export default function Pacman({ direction, size, animation }: iPacman) {
   }
 
   return (
-    <div style={{marginTop: size / 8}} className={`${_direction}`}>
+    <div style={{paddingTop: size / 8}} className={`${_direction}`}>
       <img
         style={{ width: size, height: size }}
         src={useAnimation()}
