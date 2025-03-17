@@ -1,6 +1,4 @@
 import { Scenes } from "~/components/enums/scene";
-import ClickBtn from "~/components/ui/button";
-import SoundPlayer from "../components/utils/soundPlayer";
 import Button from "~/components/ui/button";
 
 export default function MapSelector() {
