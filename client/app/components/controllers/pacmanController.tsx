@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import Pacman from "../sprites/pacman";
-import { setPacmanState,setPacmanPosition,setPacmanSize,setPacmanDirection } from "~/store/pacmanSlice";
+import {
+  setPacmanState,
+  setPacmanPosition,
+  setPacmanSize,
+  setPacmanDirection,
+} from "~/store/pacmanSlice";
 import SoundPlayer from "../utils/soundPlayer";
 import CheckCollision from "../utils/checkCollision";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,9 +14,9 @@ import { PacState } from "../enums/pacman";
 import { Direction } from "../enums/global";
 
 export default function PacmanController({ map }: { map: string }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const pacman = useSelector((state: RootState) => state.pacman);
-  const {tiles, size} = useSelector((state: RootState) => state.map);
+  const { tiles, size } = useSelector((state: RootState) => state.map);
   const [animation, setAnimation] = useState("");
   const [keyState, setKeyState] = useState({
     up: false,
@@ -23,16 +28,16 @@ export default function PacmanController({ map }: { map: string }) {
   //**change pacman size depending on the map
   switch (map) {
     case "challenge":
-      setPacmanSize(16);
+      dispatch(setPacmanSize(16));
       break;
     case "classic":
-      setPacmanSize(32);
+      dispatch(setPacmanSize(32));
       break;
     case "small":
-      setPacmanSize(48);
+      dispatch(setPacmanSize(48));
       break;
     default:
-      setPacmanSize(48);
+      dispatch(setPacmanSize(48));
       break;
   }
   //**change animation depending on the state
@@ -49,7 +54,7 @@ export default function PacmanController({ map }: { map: string }) {
         break;
       case "dead":
         setAnimation("dead");
-        SoundPlayer({folder:"gameplay",audio:"death"})
+        SoundPlayer({ folder: "gameplay", audio: "death" });
         break;
       default:
         setAnimation("");
@@ -77,10 +82,10 @@ export default function PacmanController({ map }: { map: string }) {
 
   //** Handle keydown and keyup events
   useEffect(() => {
-    const handleKeyDown = (e: { key: string; }) => {
+    const handleKeyDown = (e: { key: string }) => {
       switch (e.key) {
         case "q":
-          setPacmanState(PacState.dead);
+          dispatch(setPacmanState(PacState.dead));
           break;
         case "ArrowUp":
           setKeyState((prev) => ({
@@ -119,10 +124,10 @@ export default function PacmanController({ map }: { map: string }) {
       }
     };
 
-    const handleKeyUp = (e: { key: string; }) => {
+    const handleKeyUp = (e: { key: string }) => {
       switch (e.key) {
         case "q":
-          setPacmanState(PacState.dead);
+          dispatch(setPacmanState(PacState.dead));
           break;
         case "ArrowUp":
           setKeyState((prev) => ({ ...prev, up: false }));
@@ -154,9 +159,11 @@ export default function PacmanController({ map }: { map: string }) {
 
   useEffect(() => {
     if (!keyState.up && !keyState.down && !keyState.left && !keyState.right) {
-      if (pacman.state !== PacState.idle && pacman.state !== PacState.dead) setPacmanState(PacState.idle); // Evita renders innecesarios
+      if (pacman.state !== PacState.idle && pacman.state !== PacState.dead)
+        dispatch(setPacmanState(PacState.idle)); // Evita renders innecesarios
     } else {
-      if (pacman.state !== PacState.chop) setPacmanState(PacState.chop); // Solo cambia si es diferente
+      if (pacman.state !== PacState.chop)
+        dispatch(setPacmanState(PacState.chop)); // Solo cambia si es diferente
     }
   }, [keyState, pacman.state]);
 
@@ -167,21 +174,26 @@ export default function PacmanController({ map }: { map: string }) {
 
       if (keyState.up) {
         newY -= speed;
-        setPacmanDirection(Direction.up);
+        dispatch(setPacmanDirection(Direction.up));
       } else if (keyState.down) {
         newY += speed;
-        setPacmanDirection(Direction.down);
+        dispatch(setPacmanDirection(Direction.down));
       } else if (keyState.left) {
         newX -= speed;
-        setPacmanDirection(Direction.left);
+        dispatch(setPacmanDirection(Direction.left));
       } else if (keyState.right) {
         newX += speed;
-        setPacmanDirection(Direction.right);
+        dispatch(setPacmanDirection(Direction.right));
       }
 
       const newPos = { x: newX, y: newY };
       const isColliding = tiles.some((part: any) =>
-        CheckCollision({objectA:newPos, sizeA:pacman.size, objectB:part.position, sizeB:size})
+        CheckCollision({
+          objectA: newPos,
+          sizeA: pacman.size,
+          objectB: part.position,
+          sizeB: size,
+        })
       );
 
       if (!isColliding) {
@@ -190,7 +202,16 @@ export default function PacmanController({ map }: { map: string }) {
     }, 16);
 
     return () => clearInterval(moveInterval);
-  }, [dispatch, keyState, speed, tiles, pacman.size, size, pacman.position, pacman.direction]);
+  }, [
+    dispatch,
+    keyState,
+    speed,
+    tiles,
+    pacman.size,
+    size,
+    pacman.position,
+    pacman.direction,
+  ]);
 
   return (
     <span
@@ -200,7 +221,11 @@ export default function PacmanController({ map }: { map: string }) {
         left: `${pacman.position.x}px`,
       }}
     >
-      <Pacman size={pacman.size} direction={pacman.direction} animation={animation} />
+      <Pacman
+        size={pacman.size}
+        direction={pacman.direction}
+        animation={animation}
+      />
     </span>
   );
 }

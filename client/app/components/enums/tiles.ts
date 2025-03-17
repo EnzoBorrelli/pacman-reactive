@@ -1,9 +1,9 @@
 export enum Tiles {
     cornerWall = "cornerWall",
     doubleWall = "doubleWall",
-    simpleWall = "singleWall",
+    simpleWall = "simpleWall",
     doubleCorner = "doubleCorner",
-    simpleCorner = "singleCorner",
+    simpleCorner = "simpleCorner",
     longCorner = "longCorner",
     miniCorner = "miniCorner",
     rectangle = "rectangle",
