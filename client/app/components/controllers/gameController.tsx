@@ -20,7 +20,7 @@ export default function GameController() {
   }, [position]);
   return (
     <div
-      className="bg-red-500 relative"
+      className="relative"
       style={{ width: mapSize.x, height: mapSize.y }}
     >
       <PacmanController map="small" />
