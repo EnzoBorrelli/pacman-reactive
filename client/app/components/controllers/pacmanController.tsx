@@ -16,7 +16,7 @@ import { Direction } from "../enums/global";
 export default function PacmanController({ map }: { map: string }) {
   const dispatch = useDispatch();
   const pacman = useSelector((state: RootState) => state.pacman);
-  const { tiles, size } = useSelector((state: RootState) => state.map);
+  const { tiles, tileSize } = useSelector((state: RootState) => state.map);
   const [animation, setAnimation] = useState("");
   const [keyState, setKeyState] = useState({
     up: false,
@@ -192,7 +192,7 @@ export default function PacmanController({ map }: { map: string }) {
           objectA: newPos,
           sizeA: pacman.size,
           objectB: part.position,
-          sizeB: size,
+          sizeB: tileSize,
         })
       );
 
@@ -208,7 +208,7 @@ export default function PacmanController({ map }: { map: string }) {
     speed,
     tiles,
     pacman.size,
-    size,
+    tileSize,
     pacman.position,
     pacman.direction,
   ]);

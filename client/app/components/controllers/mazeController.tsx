@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "~/store";
 
 export default function MazeController({ map }: { map: string }) {
-  const { tiles, size } = useSelector((state: RootState) => state.map);
+  const { tiles, tileSize } = useSelector((state: RootState) => state.map);
   const dispatch = useDispatch();
   useEffect(() => {
     switch (map) {
@@ -48,7 +48,7 @@ export default function MazeController({ map }: { map: string }) {
           key={index}
           position={part.position}
           type={part.type}
-          size={size}
+          size={tileSize}
           rotation={part.direction}
           isFlip={part.flip!}
         />
