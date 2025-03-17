@@ -31,7 +31,7 @@ export default function MazePart({ rotation, size, type, isFlip }: iMazePart) {
   }
   return (
     <div className={`${_rotation} ${flip}`}>
-      <img style={{ width: size, height: size }} src={mazePart} alt="fruit" />
+      <img style={{ width: size, height: size }} src={mazePart} alt="tile" />
     </div>
   );
 }
