@@ -219,6 +219,7 @@ export default function PacmanController({ map }: { map: string }) {
         position: "absolute",
         top: `${pacman.position.y}px`,
         left: `${pacman.position.x}px`,
+        zIndex: 3,
       }}
     >
       <Pacman

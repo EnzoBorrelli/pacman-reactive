@@ -21,6 +21,7 @@ export default function TileController({
         position: "absolute",
         top: `${position.y}px`,
         left: `${position.x}px`,
+        zIndex: 1,
       }}
     >
       <MazePart type={type} size={size} rotation={rotation} isFlip={isFlip} />
