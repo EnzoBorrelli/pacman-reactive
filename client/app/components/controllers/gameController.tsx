@@ -4,6 +4,7 @@ import MazeController from "./mazeController";
 import PacmanController from "./pacmanController";
 import { setPacmanPosition } from "~/store/pacmanSlice";
 import { useEffect } from "react";
+import CollisionDebug from "../utils/debug/collisionDebug";
 
 export default function GameController() {
   const { mapSize } = useSelector((state: RootState) => state.map);
@@ -25,6 +26,7 @@ export default function GameController() {
     >
       <PacmanController map="small" />
       <MazeController map="small" />
+      <CollisionDebug isDebug={false} />
     </div>
   );
 }
