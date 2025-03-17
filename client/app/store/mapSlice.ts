@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Direction, objectSize } from "~/components/enums/global";
+import { Maps } from "~/components/enums/maps";
 import { Tiles } from "~/components/enums/tiles";
 
 export interface Tile {
@@ -11,7 +12,8 @@ export interface Tile {
 
 interface MapState{
   tiles: Tile[];
-  size: objectSize;
+  tileSize: objectSize;
+  mapSize: { x: number; y: number };
 }
 
 const initialState: MapState = {
@@ -20,7 +22,8 @@ const initialState: MapState = {
     position:{x:0,y:0},
     direction:Direction.right
   }],
-  size: objectSize.classic
+  tileSize: objectSize.classic,
+  mapSize: Maps.classicMap
 };
 
 const mapSlice = createSlice({
@@ -37,10 +40,13 @@ const mapSlice = createSlice({
       state.tiles.splice(action.payload, 1);
     },
     setTileSize: (state, action: PayloadAction<objectSize>) => {
-      state.size = action.payload;
+      state.tileSize = action.payload;
+    },
+    setMapSize: (state, action: PayloadAction<{x:number,y:number}>) => {
+      state.mapSize = action.payload;
     },
   },
 });
 
-export const { setMapTiles, addTile, removeTile, setTileSize } = mapSlice.actions;
+export const { setMapTiles, addTile, removeTile, setTileSize,setMapSize } = mapSlice.actions;
 export default mapSlice.reducer;
