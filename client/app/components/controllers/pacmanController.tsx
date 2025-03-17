@@ -28,16 +28,16 @@ export default function PacmanController({ map }: { map: string }) {
   //**change pacman size depending on the map
   switch (map) {
     case "challenge":
-      dispatch(setPacmanSize(16));
+      dispatch(setPacmanSize(12));
       break;
     case "classic":
-      dispatch(setPacmanSize(32));
+      dispatch(setPacmanSize(24));
       break;
     case "small":
-      dispatch(setPacmanSize(48));
+      dispatch(setPacmanSize(36));
       break;
     default:
-      dispatch(setPacmanSize(48));
+      dispatch(setPacmanSize(36));
       break;
   }
   //**change animation depending on the state
