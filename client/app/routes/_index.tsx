@@ -2,7 +2,7 @@ import type { MetaFunction } from "@remix-run/node";
 import { useSelector } from "react-redux";
 import { Scenes } from "~/components/enums/scene";
 import SceneDisplay from "~/components/sceneDisplay";
-import ClickBtn from "~/components/utils/clickBtn";
+import Button from "~/components/ui/button";
 import { RootState } from "~/store";
 
 export const meta: MetaFunction = () => {
@@ -19,14 +19,14 @@ export default function Index() {
       <h3 className="mb-4 font-bold tracking-wider text-center text-md text-slate-300">
         TOP SCORE: 0
       </h3>
-      <button
-        onClick={() => ClickBtn({scene: Scenes.mapSelector, soundData: {folder: "ui", audio: "menu"}})}
-        className={`${
+      <Button
+        scene={Scenes.mainMenu}
+        soundData={{ folder: "ui", audio: "menu" }}
+        style={`${
           scene.scene === Scenes.mainMenu ? "hidden" : "flex"
         } text-slate-300 bg-slate-800 ring-2 ring-slate-500 px-2 py-1 rounded-md`}
-      >
-        Main Menu
-      </button>
+        label="Main Menu"
+      />
       <SceneDisplay />
     </main>
   );

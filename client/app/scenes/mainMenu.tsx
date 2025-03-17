@@ -1,43 +1,40 @@
 import Logo from "~/components/ui/logo";
 import SoundPlayer from "../components/utils/soundPlayer";
-import ClickBtn from "~/components/utils/clickBtn";
+import ClickBtn from "~/components/ui/button";
 import { Scenes } from "~/components/enums/scene";
+import Button from "~/components/ui/button";
 
 export default function MainMenu() {
-  
   return (
     <main className="flex flex-col items-center w-full p-4 h-dvh">
-      <Logo/>
+      <Logo />
       <ul className="flex flex-col items-center gap-4 mt-10 text-lg font-bold tracking-wider text-center text-orange-300">
         <li className="flex items-center justify-center gap-4 group">
           <div className="hidden group-hover:block w-3 h-3 -rotate-[135deg] border-b-4 border-l-4 border-transparent border-b-slate-50 border-l-slate-50"></div>
-          <button
-            onMouseEnter={() => SoundPlayer({folder: "ui", audio: "hover"})}
-            onClick={() => ClickBtn({scene: Scenes.mapSelector, soundData: {folder: "ui", audio: "select"}})}
-            className=" group-hover:text-yellow-300"
-          >
-            Play
-          </button>
+          <Button
+            scene={Scenes.mapSelector}
+            soundData={{ folder: "ui", audio: "select" }}
+            style="group-hover:text-yellow-300"
+            label="Play"
+          />
         </li>
         <li className="flex items-center justify-center gap-4 group">
           <div className="hidden group-hover:block w-3 h-3 -rotate-[135deg] border-b-4 border-l-4 border-transparent border-b-slate-50 border-l-slate-50"></div>
-          <button
-            onMouseEnter={() => SoundPlayer({folder: "ui", audio: "hover"})}
-            onClick={() => ClickBtn({scene: Scenes.sprites, soundData: {folder: "ui", audio: "select"}})}
-            className=" group-hover:text-yellow-300"
-          >
-            Extras
-          </button>
+          <Button
+            scene={Scenes.sprites}
+            soundData={{ folder: "ui", audio: "select" }}
+            style="group-hover:text-yellow-300"
+            label="Extras"
+          />
         </li>
         <li className="flex items-center justify-center gap-4 group">
           <div className="hidden group-hover:block w-3 h-3 -rotate-[135deg] border-b-4 border-l-4 border-transparent border-b-slate-50 border-l-slate-50"></div>
-          <button
-            onMouseEnter={() => SoundPlayer({folder: "ui", audio: "hover"})}
-            onClick={() => ClickBtn({scene: Scenes.mainMenu, soundData: {folder: "ui", audio: "select"}})}
-            className=" group-hover:text-yellow-300"
-          >
-            About
-          </button>
+          <Button
+            scene={Scenes.mainMenu}
+            soundData={{ folder: "ui", audio: "select" }}
+            style="group-hover:text-yellow-300"
+            label="About"
+          />
         </li>
       </ul>
 

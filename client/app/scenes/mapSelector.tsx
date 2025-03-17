@@ -1,6 +1,7 @@
 import { Scenes } from "~/components/enums/scene";
-import ClickBtn from "~/components/utils/clickBtn";
+import ClickBtn from "~/components/ui/button";
 import SoundPlayer from "../components/utils/soundPlayer";
+import Button from "~/components/ui/button";
 
 export default function MapSelector() {
   return (
@@ -11,48 +12,30 @@ export default function MapSelector() {
       <ul className="flex flex-col items-center justify-center gap-10 mt-10 text-lg font-bold tracking-wider text-center text-orange-300">
         <li className="flex items-center justify-center gap-4 group">
           <div className="hidden group-hover:block w-3 h-3 -rotate-[135deg] border-b-4 border-l-4 border-transparent border-b-slate-50 border-l-slate-50"></div>
-          <button
-            onMouseEnter={() => SoundPlayer({ folder: "ui", audio: "hovert" })}
-            onClick={() =>
-              ClickBtn({
-                scene: Scenes.smallMap,
-                soundData: { folder: "ui", audio: "select" },
-              })
-            }
-            className=" group-hover:text-yellow-300"
-          >
-            Small
-          </button>
+          <Button
+            scene={Scenes.smallMap}
+            soundData={{ folder: "ui", audio: "select" }}
+            style="group-hover:text-yellow-300"
+            label="Small"
+          />
         </li>
         <li className="flex items-center justify-center gap-4 group">
           <div className="hidden group-hover:block w-3 h-3 -rotate-[135deg] border-b-4 border-l-4 border-transparent border-b-slate-50 border-l-slate-50"></div>
-          <button
-            onMouseEnter={() => SoundPlayer({ folder: "ui", audio: "hovert" })}
-            onClick={() =>
-              ClickBtn({
-                scene: Scenes.classicMap,
-                soundData: { folder: "ui", audio: "select" },
-              })
-            }
-            className=" group-hover:text-yellow-300"
-          >
-            Classic
-          </button>
+          <Button
+            scene={Scenes.classicMap}
+            soundData={{ folder: "ui", audio: "select" }}
+            style="group-hover:text-yellow-300"
+            label="Classic"
+          />
         </li>
         <li className="flex items-center justify-center gap-4 group">
           <div className="hidden group-hover:block w-3 h-3 -rotate-[135deg] border-b-4 border-l-4 border-transparent border-b-slate-50 border-l-slate-50"></div>
-          <button
-            onMouseEnter={() => SoundPlayer({ folder: "ui", audio: "hovert" })}
-            onClick={() =>
-              ClickBtn({
-                scene: Scenes.classicMap,
-                soundData: { folder: "ui", audio: "select" },
-              })
-            }
-            className=" group-hover:text-yellow-300"
-          >
-            Challenge
-          </button>
+          <Button
+            scene={Scenes.classicMap}
+            soundData={{ folder: "ui", audio: "select" }}
+            style="group-hover:text-yellow-300"
+            label="Challenge"
+          />
         </li>
       </ul>
     </main>
