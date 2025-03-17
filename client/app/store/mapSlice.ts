@@ -10,8 +10,14 @@ export interface Tile {
   flip?: boolean;
 }
 
+export interface Dot {
+  power: boolean;
+  position: { x: number; y: number };
+}
+
 interface MapState{
   tiles: Tile[];
+  dots: Dot[];
   tileSize: objectSize;
   mapSize: { x: number; y: number };
 }
@@ -21,6 +27,10 @@ const initialState: MapState = {
     type:Tiles.doubleWall,
     position:{x:0,y:0},
     direction:Direction.right
+  }],
+  dots:[{
+    power:false,
+    position:{x:24,y:24}
   }],
   tileSize: objectSize.classic,
   mapSize: Maps.classicMap
@@ -32,6 +42,9 @@ const mapSlice = createSlice({
   reducers: {
     setMapTiles: (state, action: PayloadAction<Tile[]>) => {
       state.tiles = action.payload;
+    },
+    setMapDots: (state, action: PayloadAction<Dot[]>) => {
+      state.dots = action.payload;
     },
     addTile: (state, action: PayloadAction<Tile>) => {
       state.tiles.push(action.payload);
