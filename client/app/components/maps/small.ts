@@ -1677,3 +1677,6 @@ export const smallMap: Tile[] = [
     position: { x: 696, y: 480 },
   },
 ];
+
+
+
