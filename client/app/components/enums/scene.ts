@@ -4,4 +4,5 @@ export enum Scenes {
     sprites = "sprites",
     smallMap = "smallMap",
     classicMap = "classicMap",
+    challengeMap = "challengeMap",
 }
