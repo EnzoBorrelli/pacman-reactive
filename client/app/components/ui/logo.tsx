@@ -16,10 +16,10 @@ export default function Logo() {
         <h3 className="absolute text-2xl font-bold tracking-widest text-center text-slate-950 text-stroke-1 top-[5.75rem] left-[9.25rem]">
           multiplayer
         </h3>
-        <h3 className="absolute text-2xl font-bold tracking-widest text-center text-slate-500 text-stroke-2 top-[5.25rem] left-[8.75rem]">
+        <h3 className="absolute text-2xl font-bold tracking-widest text-center text-slate-500 text-stroke-3 top-[5.25rem] left-[8.75rem]">
           multiplayer
         </h3>
-        <h3 className="absolute text-2xl font-bold tracking-widest text-center text-slate-100 text-stroke-3 top-[5.5rem] left-36">
+        <h3 className="absolute text-2xl font-bold tracking-widest text-center text-slate-100 text-stroke-2 top-[5.5rem] left-36">
           multiplayer
         </h3>
       </div>
