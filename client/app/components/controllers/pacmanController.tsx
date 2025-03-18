@@ -149,10 +149,10 @@ export default function PacmanController() {
       !keyStateMemo.left &&
       !keyStateMemo.right
     ) {
-      if (pacman.state !== PacState.idle && pacman.state !== PacState.dead)
+      if (pacman.state !== PacState.idle && pacman.state !== PacState.dead && pacman.state !== PacState.power)
         dispatch(setPacmanState(PacState.idle)); // Evita renders innecesarios
     } else {
-      if (pacman.state !== PacState.chop)
+      if (pacman.state !== PacState.chop && pacman.state !== PacState.power)
         dispatch(setPacmanState(PacState.chop)); // Solo cambia si es diferente
     }
     if (
