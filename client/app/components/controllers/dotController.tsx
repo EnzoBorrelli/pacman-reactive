@@ -1,9 +1,12 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "~/store";
 import Dot from "../sprites/dot";
 import CheckCollision from "../utils/checkCollision";
 import { useEffect, useState } from "react";
 import SoundPlayer from "../utils/soundPlayer";
+import { setGameScore } from "~/store/gameSlice";
+import { setPacmanState } from "~/store/pacmanSlice";
+import { PacState } from "../enums/pacman";
 
 interface iDotController {
   position: { x: number; y: number };
@@ -17,6 +20,8 @@ export default function DotController({
   power,
 }: iDotController) {
   const pacman = useSelector((state: RootState) => state.pacman);
+  const { score } = useSelector((state: RootState) => state.game);
+  const dispatch = useDispatch();
   const [isEaten, setIsEaten] = useState(false);
 
   const isColliding = CheckCollision({
@@ -30,10 +35,17 @@ export default function DotController({
     if (isColliding) {
       if (!isEaten) {
         setIsEaten(true);
-        SoundPlayer({ folder: "gameplay", audio: "eat_dot_0" });
+        if (power) {
+          SoundPlayer({ folder: "gameplay", audio: "eat_dot_1" });
+          dispatch(setGameScore(score + 50));
+          dispatch(setPacmanState(PacState.power));
+        } else {
+          SoundPlayer({ folder: "gameplay", audio: "eat_dot_0" });
+          dispatch(setGameScore(score + 10));
+        }
       }
     }
-  }, [isColliding]);
+  }, [isColliding, dispatch]);
 
   return (
     <span
