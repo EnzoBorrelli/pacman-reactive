@@ -14,10 +14,11 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   const scene = useSelector((state: RootState) => state.scene);
+  const { highScore } = useSelector((state: RootState) => state.game);
   return (
     <main className="flex flex-col items-center w-full p-4 bg-slate-950 h-dvh">
       <h3 className="mb-4 font-bold tracking-wider text-center text-md text-slate-300">
-        TOP SCORE: 0
+        HIGHSCORE: {highScore}
       </h3>
       <Button
         scene={Scenes.mainMenu}
