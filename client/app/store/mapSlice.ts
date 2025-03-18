@@ -61,5 +61,5 @@ const mapSlice = createSlice({
   },
 });
 
-export const { setMapTiles, addTile, removeTile, setTileSize,setMapSize } = mapSlice.actions;
+export const { setMapTiles, addTile, removeTile, setTileSize,setMapSize,setMapDots } = mapSlice.actions;
 export default mapSlice.reducer;
