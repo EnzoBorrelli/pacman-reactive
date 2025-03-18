@@ -30,7 +30,6 @@ export default function DotController({
     if (isColliding) {
       if (!isEaten) {
         setIsEaten(true);
-        console.log("Eaten");
         SoundPlayer({ folder: "gameplay", audio: "eat_dot_0" });
       }
     }

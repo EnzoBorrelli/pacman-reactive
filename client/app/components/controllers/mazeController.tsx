@@ -5,41 +5,33 @@ import { smallMap } from "../maps/small";
 import { setMapTiles, setTileSize } from "~/store/mapSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "~/store";
+import { Scenes } from "../enums/scene";
 
-export default function MazeController({ map }: { map: string }) {
+export default function MazeController() {
   const { tiles, tileSize } = useSelector((state: RootState) => state.map);
+  const {scene} = useSelector((state: RootState) => state.scene);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    switch (map) {
-      case "challenge":
+    switch (scene) {
+      case Scenes.challengeMap:
         dispatch(setMapTiles(classicMap));
+        dispatch(setTileSize(8));
         break;
-      case "classic":
+      case Scenes.classicMap:
         dispatch(setMapTiles(classicMap));
+        dispatch(setTileSize(16));
         break;
-      case "small":
+      case Scenes.smallMap:
         dispatch(setMapTiles(smallMap));
+        dispatch(setTileSize(24));
         break;
       default:
         dispatch(setMapTiles(classicMap));
+        dispatch(setTileSize(16));
         break;
     }
-  }, [map]); // Se ejecuta solo cuando cambia `map`
-
-  switch (map) {
-    case "challenge":
-      dispatch(setTileSize(8));
-      break;
-    case "classic":
-      dispatch(setTileSize(16));
-      break;
-    case "small":
-      dispatch(setTileSize(24));
-      break;
-    default:
-      dispatch(setTileSize(16));
-      break;
-  }
+  }, [scene, dispatch]); // Se ejecuta solo cuando cambia `map`
 
   return (
     <>
