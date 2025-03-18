@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '~/store';
 
 export default function PacmanDebug({isDebug}: {isDebug: boolean}) {
-    const pacman = useSelector((state: RootState) => state.pacman);
+    const {position, state} = useSelector((state: RootState) => state.pacman);
   return (
     <h4
           className={`${
@@ -11,9 +11,9 @@ export default function PacmanDebug({isDebug}: {isDebug: boolean}) {
         >
           <span>Pacman position</span>
           <span>
-            x:{pacman.position.x} Y:{pacman.position.y}
+            x:{position.x} Y:{position.y}
           </span>
-          <span>Pacman state: {pacman.state}</span>
+          <span>Pacman state: {state}</span>
         </h4>
   )
 }
