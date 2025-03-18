@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Pacman from "../sprites/pacman";
 import {
   setPacmanState,
@@ -12,12 +12,20 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "~/store";
 import { PacState } from "../enums/pacman";
 import { Direction } from "../enums/global";
+import { Scenes } from "../enums/scene";
+import { setGameState } from "~/store/gameSlice";
+import { GameStates } from "../enums/game";
 
-export default function PacmanController({ map }: { map: string }) {
+export default function PacmanController() {
   const dispatch = useDispatch();
   const pacman = useSelector((state: RootState) => state.pacman);
+  const game = useSelector((state: RootState) => state.game);
+  const { scene } = useSelector((state: RootState) => state.scene);
   const { tiles, tileSize } = useSelector((state: RootState) => state.map);
   const [animation, setAnimation] = useState("");
+  const [speed, setSpeed] = useState(12);
+  const boost = pacman.state === "power" ? 1.5 : 1;
+
   const [keyState, setKeyState] = useState({
     up: false,
     down: false,
@@ -25,21 +33,36 @@ export default function PacmanController({ map }: { map: string }) {
     right: false,
   });
 
-  //**change pacman size depending on the map
-  switch (map) {
-    case "challenge":
-      dispatch(setPacmanSize(12));
-      break;
-    case "classic":
-      dispatch(setPacmanSize(24));
-      break;
-    case "small":
-      dispatch(setPacmanSize(36));
-      break;
-    default:
-      dispatch(setPacmanSize(36));
-      break;
-  }
+  const keyStateMemo = useMemo(
+    () => keyState,
+    [keyState.up, keyState.down, keyState.left, keyState.right]
+  );
+
+  //**change depending on the map
+  useEffect(() => {
+    switch (scene) {
+      case Scenes.challengeMap:
+        dispatch(setPacmanSize(12));
+        dispatch(setPacmanPosition({ x: 24, y: 24 }));
+        setSpeed(Math.round(4 * boost));
+        break;
+      case Scenes.classicMap:
+        dispatch(setPacmanSize(24));
+        dispatch(setPacmanPosition({ x: 24, y: 24 }));
+        setSpeed(Math.round(8 * boost));
+        break;
+      case Scenes.smallMap:
+        dispatch(setPacmanSize(36));
+        dispatch(setPacmanPosition({ x: 336, y: 304 }));
+        setSpeed(Math.round(12 * boost));
+        break;
+      default:
+        dispatch(setPacmanSize(36));
+        dispatch(setPacmanPosition({ x: 336, y: 304 }));
+        setSpeed(Math.round(12 * boost));
+        break;
+    }
+  }, [scene, dispatch]);
   //**change animation depending on the state
   useEffect(() => {
     switch (pacman.state) {
@@ -62,73 +85,35 @@ export default function PacmanController({ map }: { map: string }) {
     }
   }, [pacman.state]);
 
-  let speed;
-  const boost = pacman.state === "power" ? 1.5 : 1;
-  //**change speed based on the map
-  switch (map) {
-    case "challenge":
-      speed = Math.round(4 * boost);
-      break;
-    case "classic":
-      speed = Math.round(8 * boost);
-      break;
-    case "small":
-      speed = Math.round(12 * boost);
-      break;
-    default:
-      speed = Math.round(12 * boost);
-      break;
-  }
-
   //** Handle keydown and keyup events
   useEffect(() => {
     const handleKeyDown = (e: { key: string }) => {
-      switch (e.key) {
-        case "q":
-          dispatch(setPacmanState(PacState.dead));
-          break;
-        case "ArrowUp":
-          setKeyState((prev) => ({
-            ...prev,
-            up: true,
-            left: false,
-            right: false,
-          }));
-          break;
-        case "ArrowDown":
-          setKeyState((prev) => ({
-            ...prev,
-            down: true,
-            left: false,
-            right: false,
-          }));
-          break;
-        case "ArrowLeft":
-          setKeyState((prev) => ({
-            ...prev,
-            left: true,
-            up: false,
-            down: false,
-          }));
-          break;
-        case "ArrowRight":
-          setKeyState((prev) => ({
-            ...prev,
-            right: true,
-            up: false,
-            down: false,
-          }));
-          break;
-        default:
-          break;
-      }
+      setKeyState((prev) => {
+        const newState = { ...prev };
+
+        switch (e.key) {
+          case "ArrowUp":
+            if (!prev.up) newState.up = true;
+            break;
+          case "ArrowDown":
+            if (!prev.down) newState.down = true;
+            break;
+          case "ArrowLeft":
+            if (!prev.left) newState.left = true;
+            break;
+          case "ArrowRight":
+            if (!prev.right) newState.right = true;
+            break;
+          default:
+            return prev;
+        }
+
+        return prev === newState ? prev : newState;
+      });
     };
 
     const handleKeyUp = (e: { key: string }) => {
       switch (e.key) {
-        case "q":
-          dispatch(setPacmanState(PacState.dead));
-          break;
         case "ArrowUp":
           setKeyState((prev) => ({ ...prev, up: false }));
           break;
@@ -158,14 +143,28 @@ export default function PacmanController({ map }: { map: string }) {
   }, []);
 
   useEffect(() => {
-    if (!keyState.up && !keyState.down && !keyState.left && !keyState.right) {
+    if (
+      !keyStateMemo.up &&
+      !keyStateMemo.down &&
+      !keyStateMemo.left &&
+      !keyStateMemo.right
+    ) {
       if (pacman.state !== PacState.idle && pacman.state !== PacState.dead)
         dispatch(setPacmanState(PacState.idle)); // Evita renders innecesarios
     } else {
       if (pacman.state !== PacState.chop)
         dispatch(setPacmanState(PacState.chop)); // Solo cambia si es diferente
     }
-  }, [keyState, pacman.state]);
+    if (
+      (keyStateMemo.up ||
+        keyStateMemo.down ||
+        keyStateMemo.left ||
+        keyStateMemo.right) &&
+      game.state === GameStates.start
+    ) {
+      dispatch(setGameState(GameStates.playing));
+    }
+  }, [keyStateMemo, pacman.state, dispatch]);
 
   useEffect(() => {
     const moveInterval = setInterval(() => {
