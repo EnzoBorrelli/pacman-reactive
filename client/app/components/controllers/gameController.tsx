@@ -2,15 +2,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "~/store";
 import MazeController from "./mazeController";
 import PacmanController from "./pacmanController";
-import { setPacmanPosition } from "~/store/pacmanSlice";
-import { useEffect } from "react";
+import { setPacmanPosition, setPacmanState } from "~/store/pacmanSlice";
+import { useEffect, useState } from "react";
 import { GameStates } from "../enums/game";
 import ObjectsController from "./objectsController";
+import Score from "../ui/score";
+import { PacState } from "../enums/pacman";
+import SoundPlayer from "../utils/soundPlayer";
 
 export default function GameController() {
   const { mapSize } = useSelector((state: RootState) => state.map);
-  const { position } = useSelector((state: RootState) => state.pacman);
+  const { position, state } = useSelector((state: RootState) => state.pacman);
   const game = useSelector((state: RootState) => state.game);
+  const [isPowered, setIsPowered] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,11 +27,29 @@ export default function GameController() {
       }
     }
   }, [position, dispatch, game.state]);
+
+  useEffect(() => {
+    if (state === PacState.power) {
+      setIsPowered(true);
+      const interval = setInterval(() => {
+        SoundPlayer({ folder: "gameplay", audio: "fright" });
+      }, 900);
+      const timer = setTimeout(() => {
+        dispatch(setPacmanState(PacState.chop));
+        setIsPowered(false);
+      }, 8000);
+      return () => {
+        clearTimeout(timer);
+        clearInterval(interval);
+      };
+    }
+  }, [state]);
   return (
     <div className="relative" style={{ width: mapSize.x, height: mapSize.y }}>
       <PacmanController />
       <MazeController />
-      <ObjectsController/>
+      <ObjectsController />
+      <Score score={game.score} />
     </div>
   );
 }
