@@ -14,8 +14,8 @@ export default function Sprites() {
       </h2>
       <div className="flex items-center justify-center gap-6">
         <Pacman size={CharacterSize.small} direction={Direction.right} animation={PacState.chop} />
-        <Dot map="classic" isPower={false}/>
-        <Dot map="classic" isPower={true} />
+        <Dot size={16}  isPower={false}/>
+        <Dot size={16}  isPower={true} />
         <Ghost map="classic" ghost="inky" direction="up" state="walking" />
         <Ghost map="classic" ghost="blinky" direction="down" state="walking" />
         <Ghost map="classic" ghost="pinky" direction="right" state="walking" />
