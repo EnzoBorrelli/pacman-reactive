@@ -1,30 +1,16 @@
 import { useEffect, useState } from "react";
+import { GhostState, GhostType } from "../enums/ghosts";
+import { CharacterSize, Direction } from "../enums/global";
 
 interface iGhost {
-  ghost: string;
-  map: string;
-  direction: string;
-  state: string;
+  type: GhostType;
+  size: CharacterSize;
+  direction: Direction;
+  state: GhostState;
 }
 
-export default function Ghost({ ghost, map, direction, state }: iGhost) {
+export default function Ghost({ type, size, direction, state }: iGhost) {
   let _direction = `/assets/sprites/ghosts/eyes/${direction}.png`;
-  let size = "size-[32px]";
-
-  switch (map) {
-    case "challenge":
-      size = "size-[32px]";
-      break;
-    case "classic":
-      size = "size-[48px]";
-      break;
-    case "small":
-      size = "size-[64px]";
-      break;
-    default:
-      size = "size-[32px]";
-      break;
-  }
 
   function WalkAnimation(_ghost: string, interval = 150) {
     const [currentFrame, setCurrentFrame] = useState(1);
@@ -60,26 +46,33 @@ export default function Ghost({ ghost, map, direction, state }: iGhost) {
 
   function useAnimation() {
     switch (state) {
-      case "walking":
-        return WalkAnimation(ghost);
-      case "frightened":
+      case GhostState.walking:
+        return WalkAnimation(type);
+      case GhostState.frightened:
         return WalkAnimation("fright");
-      case "recovering":
+      case GhostState.recovering:
         return WalkAnimation(recovering);
       default:
-        return `/assets/sprites/ghosts/body/${ghost}_1.png`;
+        return `/assets/sprites/ghosts/body/${type}_1.png`;
     }
   }
 
   return (
-    <div className="relative flex items-center justify-center">
+    <div
+      style={{ paddingTop: size / 8 }}
+      className="relative flex items-center justify-center"
+    >
       <img
-        className={`${size} ${state === "eaten" ? "opacity-0" : ""}`}
+        className={`${size} ${
+          state === GhostState.frightened ? "opacity-0" : ""
+        }`}
         src={useAnimation()}
       />
       <img
         className={`${size} absolute ${
-          state === "frightened" || state === "recovering" ? "opacity-0" : ""
+          state === "frightened" || state === GhostState.recovering
+            ? "opacity-0"
+            : ""
         }`}
         src={_direction}
       />
