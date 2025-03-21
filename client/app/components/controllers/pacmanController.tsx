@@ -15,6 +15,7 @@ import { Direction } from "../enums/global";
 import { Scenes } from "../enums/scene";
 import { setGameState } from "~/store/gameSlice";
 import { GameStates } from "../enums/game";
+import { pacmanInitialPos } from "../enums/maps";
 
 export default function PacmanController() {
   const dispatch = useDispatch();
@@ -53,12 +54,12 @@ export default function PacmanController() {
         break;
       case Scenes.smallMap:
         dispatch(setPacmanSize(36));
-        dispatch(setPacmanPosition({ x: 336, y: 304 }));
+        dispatch(setPacmanPosition(pacmanInitialPos.smallMap));
         setSpeed(Math.round(12 * boost));
         break;
       default:
         dispatch(setPacmanSize(36));
-        dispatch(setPacmanPosition({ x: 336, y: 304 }));
+        dispatch(setPacmanPosition(pacmanInitialPos.smallMap));
         setSpeed(Math.round(12 * boost));
         break;
     }
