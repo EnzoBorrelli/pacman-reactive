@@ -2,19 +2,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "~/store";
 import MazeController from "./mazeController";
 import PacmanController from "./pacmanController";
-import { setPacmanPosition, setPacmanState } from "~/store/pacmanSlice";
-import { useEffect, useState } from "react";
+import {
+  setPacmanDirection,
+  setPacmanPosition,
+  setPacmanState,
+} from "~/store/pacmanSlice";
+import { useEffect } from "react";
 import { GameStates } from "../enums/game";
 import ObjectsController from "./objectsController";
 import Score from "../ui/score";
 import { PacState } from "../enums/pacman";
 import SoundPlayer from "../utils/soundPlayer";
+import { Direction } from "../enums/global";
+import {setGameScore } from "~/store/gameSlice";
 
 export default function GameController() {
   const { mapSize } = useSelector((state: RootState) => state.map);
   const { position, state } = useSelector((state: RootState) => state.pacman);
   const game = useSelector((state: RootState) => state.game);
-  const [isPowered, setIsPowered] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,20 +35,28 @@ export default function GameController() {
 
   useEffect(() => {
     if (state === PacState.power) {
-      setIsPowered(true);
       const interval = setInterval(() => {
         SoundPlayer({ folder: "gameplay", audio: "fright" });
       }, 900);
       const timer = setTimeout(() => {
         dispatch(setPacmanState(PacState.chop));
-        setIsPowered(false);
       }, 8000);
       return () => {
         clearTimeout(timer);
         clearInterval(interval);
       };
     }
-  }, [state]);
+  }, [state, dispatch]);
+
+  useEffect(() => {
+    if (
+      game.state === GameStates.playing &&
+      game.previousState === GameStates.start
+    ) {
+      dispatch(setPacmanDirection(Direction.right));
+      dispatch(setGameScore(0));
+    }
+  }, [dispatch, game.state, game.previousState]);
   return (
     <div className="relative" style={{ width: mapSize.x, height: mapSize.y }}>
       <PacmanController />
