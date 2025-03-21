@@ -1,39 +1,45 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Direction, objectSize } from "~/components/enums/global";
 import { Maps } from "~/components/enums/maps";
 import { Tiles } from "~/components/enums/tiles";
+import { RootState } from ".";
 
 export interface Tile {
-  type:Tiles
+  type: Tiles;
   position: { x: number; y: number };
   direction: Direction;
   flip?: boolean;
 }
 
-export interface Dot {
-  power: boolean;
-  position: { x: number; y: number };
+export interface Dots {
+  layout: number[][];
 }
 
-interface MapState{
+interface MapState {
   tiles: Tile[];
-  dots: Dot[];
+  dotsLayout: Dots;
   tileSize: objectSize;
   mapSize: { x: number; y: number };
 }
 
 const initialState: MapState = {
-  tiles:[{
-    type:Tiles.doubleWall,
-    position:{x:0,y:0},
-    direction:Direction.right
-  }],
-  dots:[{
-    power:false,
-    position:{x:24,y:24}
-  }],
+  tiles: [
+    {
+      type: Tiles.doubleWall,
+      position: { x: 0, y: 0 },
+      direction: Direction.right,
+    },
+  ],
+  dotsLayout: {
+    layout: [
+      [1, 1, 1, 1],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ],
+  },
   tileSize: objectSize.classic,
-  mapSize: Maps.classicMap
+  mapSize: Maps.classicMap,
 };
 
 const mapSlice = createSlice({
@@ -43,8 +49,14 @@ const mapSlice = createSlice({
     setMapTiles: (state, action: PayloadAction<Tile[]>) => {
       state.tiles = action.payload;
     },
-    setMapDots: (state, action: PayloadAction<Dot[]>) => {
-      state.dots = action.payload;
+    setMapDots: (state, action: PayloadAction<Dots>) => {
+      state.dotsLayout = action.payload;
+    },
+    removeDot: (state, action: PayloadAction<{ x: number; y: number }>) => {
+      const { x, y } = action.payload;
+      if (state.dotsLayout.layout[y] && state.dotsLayout.layout[y][x] !== 0) {
+        state.dotsLayout.layout[y][x] = 0; // 0 means no dot
+      }
     },
     addTile: (state, action: PayloadAction<Tile>) => {
       state.tiles.push(action.payload);
@@ -55,11 +67,24 @@ const mapSlice = createSlice({
     setTileSize: (state, action: PayloadAction<objectSize>) => {
       state.tileSize = action.payload;
     },
-    setMapSize: (state, action: PayloadAction<{x:number,y:number}>) => {
+    setMapSize: (state, action: PayloadAction<{ x: number; y: number }>) => {
       state.mapSize = action.payload;
     },
   },
 });
 
-export const { setMapTiles, addTile, removeTile, setTileSize,setMapSize,setMapDots } = mapSlice.actions;
+export const selectAllEatenDots = createSelector(
+  [(state: RootState) => state.map.dotsLayout.layout],
+  (layout) => layout.every((row) => row.every((cell) => cell === 0))
+);
+
+export const {
+  setMapTiles,
+  addTile,
+  removeTile,
+  setTileSize,
+  setMapSize,
+  setMapDots,
+  removeDot,
+} = mapSlice.actions;
 export default mapSlice.reducer;
