@@ -3,6 +3,8 @@ export enum GameStates {
   playing = 1,
   lose = 2,
   win = 3,
+  lostLife = 4,
+  nextLevel = 5,
 }
 
 export enum scoreColors {
