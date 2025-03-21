@@ -15,6 +15,7 @@ import { PacState } from "../enums/pacman";
 import SoundPlayer from "../utils/soundPlayer";
 import { Direction } from "../enums/global";
 import {setGameScore } from "~/store/gameSlice";
+import GhostController from "./ghostController";
 
 export default function GameController() {
   const { mapSize } = useSelector((state: RootState) => state.map);
@@ -62,6 +63,7 @@ export default function GameController() {
       <PacmanController />
       <MazeController />
       <ObjectsController />
+      <GhostController/>
       <Score score={game.score} />
     </div>
   );

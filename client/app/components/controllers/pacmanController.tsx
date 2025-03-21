@@ -219,7 +219,7 @@ export default function PacmanController() {
         position: "absolute",
         top: `${pacman.position.y}px`,
         left: `${pacman.position.x}px`,
-        zIndex: 3,
+        zIndex: 4,
       }}
     >
       <Pacman

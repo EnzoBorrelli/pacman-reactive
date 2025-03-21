@@ -11,7 +11,7 @@ export const pacmanInitialPos = {
 }
 
 export const ghostInitialPos = {
-  smallMap: { x: 336, y: 304 },
+  smallMap: { x:336, y:256 },
   classicMap: { x: 20, y: 20 },
   challengeMap: { x: 30, y: 30 },
 }
