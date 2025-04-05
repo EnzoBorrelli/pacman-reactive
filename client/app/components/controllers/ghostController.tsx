@@ -85,7 +85,7 @@ export default function GhostController({
         setPosOffset({ x: ghost.size, y: 0 });
         break;
       case GhostType.blinky:
-        setPosOffset({ x: 0, y: -ghost.size });
+        setPosOffset({ x: 0, y: -(ghost.size*2) });
         break;
       default:
         setPosOffset({ x: 0, y: 0 });
