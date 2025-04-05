@@ -15,14 +15,13 @@ import { PacState } from "../enums/pacman";
 import SoundPlayer from "../utils/soundPlayer";
 import { Direction } from "../enums/global";
 import {setGameScore } from "~/store/gameSlice";
-import GhostController from "./ghostController";
+import FraidController from "./fraidController";
 
 export default function GameController() {
   const { mapSize } = useSelector((state: RootState) => state.map);
   const { position, state } = useSelector((state: RootState) => state.pacman);
   const game = useSelector((state: RootState) => state.game);
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (game.state === GameStates.playing) {
       if (position.x <= 0) {
@@ -63,7 +62,7 @@ export default function GameController() {
       <PacmanController />
       <MazeController />
       <ObjectsController />
-      <GhostController/>
+      <FraidController/>
       <Score score={game.score} />
     </div>
   );
