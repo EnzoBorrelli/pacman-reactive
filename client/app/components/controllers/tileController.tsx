@@ -15,8 +15,10 @@ export default function TileController({
   rotation,
   isFlip,
 }: iTileController) {
+  const debug = false;
   return (
     <span
+    className={debug ? "ring-1 ring-red-500" : ""}
       style={{
         position: "absolute",
         top: `${position.y}px`,
