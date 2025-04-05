@@ -7,6 +7,11 @@ import { Scenes } from "../enums/scene";
 import { ghostInitialPos } from "../enums/maps";
 import { UnknownAction } from "redux";
 import { Direction } from "../enums/global";
+import CheckCollision from "../utils/checkCollision";
+import { setGameScore } from "~/store/gameSlice";
+import SoundPlayer from "../utils/soundPlayer";
+import { setPacmanState } from "~/store/pacmanSlice";
+import { PacState } from "../enums/pacman";
 
 type Position = { x: number; y: number };
 interface GhostControllerProps {
@@ -36,6 +41,8 @@ export default function GhostController({
   type,
 }: GhostControllerProps) {
   const { scene } = useSelector((state: RootState) => state.scene);
+  const { score } = useSelector((state: RootState) => state.game);
+  const pacman = useSelector((state: RootState) => state.pacman);
   const dispatch = useDispatch();
   const [posOffset, setPosOffset] = useState({ x: 0, y: 0 });
   const [initialPos, setInitialPos] = useState({ x: 0, y: 0 });
@@ -48,6 +55,14 @@ export default function GhostController({
     };
   }
 
+  const isColliding = CheckCollision({
+    objectA: pacman.position,
+    sizeA: pacman.size,
+    objectB: ghost.position,
+    sizeB: ghost.size,
+  });
+
+  //based on the scene, set the ghost size and initial position
   useEffect(() => {
     switch (scene) {
       case Scenes.challengeMap:
@@ -73,6 +88,7 @@ export default function GhostController({
     }
   }, [scene, dispatch]);
 
+  //set the spawn position based on the ghost type
   useEffect(() => {
     switch (type) {
       case GhostType.pinky:
@@ -85,7 +101,7 @@ export default function GhostController({
         setPosOffset({ x: ghost.size, y: 0 });
         break;
       case GhostType.blinky:
-        setPosOffset({ x: 0, y: -(ghost.size*2) });
+        setPosOffset({ x: 0, y: -(ghost.size * 2) });
         break;
       default:
         setPosOffset({ x: 0, y: 0 });
@@ -94,6 +110,30 @@ export default function GhostController({
     setSpawn(addPositions(initialPos, posOffset));
     dispatch(setGhostPosition(spawn));
   }, [type, dispatch, spawn]);
+
+  useEffect(() => {
+    if (pacman.state === PacState.power) {
+      dispatch(setGhostState(GhostState.frightened));
+    } else {
+      dispatch(setGhostState(GhostState.walking));
+    }
+  }, [pacman.state, dispatch]);
+
+  useEffect(() => {
+    if (isColliding) {
+      if (
+        ghost.state === GhostState.frightened ||
+        ghost.state === GhostState.recovering
+      ) {
+        dispatch(setGhostState(GhostState.eaten));
+        dispatch(setGameScore(score + 200));
+        SoundPlayer({ folder: "gameplay", audio: "eat_ghost" });
+      } else if (ghost.state === GhostState.walking) {
+        dispatch(setPacmanState(PacState.dead));
+        console.log("💀");
+      }
+    }
+  }, [isColliding, ghost.state, dispatch, score]);
 
   return (
     <span
