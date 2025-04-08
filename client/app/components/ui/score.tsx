@@ -1,36 +1,34 @@
 import { useEffect, useState } from "react";
 import { scoreColors } from "../enums/game";
-import SoundPlayer from "../utils/soundPlayer";
+import soundPlayer from "../utils/soundPlayer";
 
 export default function Score({ score }: { score: number }) {
   const [color, setColor] = useState(scoreColors.common);
 
+  function UpgradeTier(scoreColor: scoreColors) {
+    setColor(scoreColor);
+    soundPlayer.PlaySound({ folder: "gameplay", audio: "eat_ghost",loop: false });
+  }
+
   useEffect(() => {
     switch (score) {
-      case 0:
-        setColor(scoreColors.common);
-        break;
       case 200:
-        setColor(scoreColors.uncommon);
-        SoundPlayer({ folder: "gameplay", audio: "eat_ghost" });
+        UpgradeTier(scoreColors.uncommon);
         break;
       case 500:
-        setColor(scoreColors.rare);
-        SoundPlayer({ folder: "gameplay", audio: "eat_ghost" });
+        UpgradeTier(scoreColors.rare);
         break;
       case 1000:
-        setColor(scoreColors.epic);
-        SoundPlayer({ folder: "gameplay", audio: "eat_ghost" });
+        UpgradeTier(scoreColors.epic);
         break;
       case 2000:
-        setColor(scoreColors.legend);
-        SoundPlayer({ folder: "gameplay", audio: "eat_ghost" });
+        UpgradeTier(scoreColors.legend);
         break;
       case 5000:
-        setColor(scoreColors.myth);
-        SoundPlayer({ folder: "gameplay", audio: "eat_ghost" });
+        UpgradeTier(scoreColors.myth);
         break;
       default:
+        setColor(scoreColors.common);
         break;
     }
   }, [score]);
