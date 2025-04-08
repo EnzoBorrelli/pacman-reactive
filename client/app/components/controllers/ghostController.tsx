@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "~/store";
 import { GhostState, GhostType } from "../enums/ghosts";
 import Ghost from "../sprites/ghost";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Scenes } from "../enums/scene";
 import { ghostInitialPos } from "../enums/maps";
 import { UnknownAction } from "redux";
@@ -40,14 +40,19 @@ export default function GhostController({
   ghost,
   type,
 }: GhostControllerProps) {
+  //selectors
   const { scene } = useSelector((state: RootState) => state.scene);
   const { score } = useSelector((state: RootState) => state.game);
   const pacman = useSelector((state: RootState) => state.pacman);
   const dispatch = useDispatch();
-  const [posOffset, setPosOffset] = useState({ x: 0, y: 0 });
-  const [initialPos, setInitialPos] = useState({ x: 0, y: 0 });
-  const [spawn, setSpawn] = useState({ x: 0, y: 0 });
 
+  //states
+  const [initialPos, setInitialPos] = useState({ x: 0, y: 0 });
+
+  //refs
+  const ghostStateRef = useRef(ghost.state);
+
+  //functions
   function addPositions(p1: Position, p2: Position): Position {
     return {
       x: p1.x + p2.x,
@@ -90,33 +95,41 @@ export default function GhostController({
 
   //set the spawn position based on the ghost type
   useEffect(() => {
+    let offset = { x: 0, y: 0 };
+  
     switch (type) {
       case GhostType.pinky:
-        setPosOffset({ x: 0, y: 0 });
+        offset = { x: 0, y: 0 };
         break;
       case GhostType.inky:
-        setPosOffset({ x: -ghost.size, y: 0 });
+        offset = { x: -ghost.size, y: 0 };
         break;
       case GhostType.clyde:
-        setPosOffset({ x: ghost.size, y: 0 });
+        offset = { x: ghost.size, y: 0 };
         break;
       case GhostType.blinky:
-        setPosOffset({ x: 0, y: -(ghost.size * 2) });
-        break;
-      default:
-        setPosOffset({ x: 0, y: 0 });
+        offset = { x: 0, y: -(ghost.size * 2) };
         break;
     }
-    setSpawn(addPositions(initialPos, posOffset));
+  
+    const spawn = addPositions(initialPos, offset);
     dispatch(setGhostPosition(spawn));
-  }, [type, dispatch, spawn]);
+  }, [type, dispatch, ghost.size, initialPos]);
+  
 
+  //set the ghost state reference to the current ghost state
+  useEffect(() => {
+    ghostStateRef.current = ghost.state;
+  }, [ghost.state]);
+
+  //set the ghost state based on pacman state
   useEffect(() => {
     if (pacman.state === PacState.power) {
       dispatch(setGhostState(GhostState.frightened));
 
       const timer = setTimeout(() => {
-        dispatch(setGhostState(GhostState.recovering));
+        if (ghostStateRef.current !== GhostState.eaten)
+          dispatch(setGhostState(GhostState.recovering));
       }, 6000);
 
       // Cleanup the timeout if pacman state changes early
@@ -126,6 +139,7 @@ export default function GhostController({
     }
   }, [pacman.state, dispatch]);
 
+  //control what happens when the ghost is eaten or collides with pacman
   useEffect(() => {
     if (isColliding) {
       if (
