@@ -114,14 +114,17 @@ export default function GhostController({
   useEffect(() => {
     if (pacman.state === PacState.power) {
       dispatch(setGhostState(GhostState.frightened));
+
       const timer = setTimeout(() => {
         dispatch(setGhostState(GhostState.recovering));
       }, 6000);
-      clearTimeout(timer);
+
+      // Cleanup the timeout if pacman state changes early
+      return () => clearTimeout(timer);
     } else {
       dispatch(setGhostState(GhostState.walking));
     }
-  }, [pacman.state, ghost.state, dispatch]);
+  }, [pacman.state, dispatch]);
 
   useEffect(() => {
     if (isColliding) {
