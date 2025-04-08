@@ -35,18 +35,23 @@ export default function GameController() {
 
   useEffect(() => {
     if (state === PacState.power) {
-      const interval = setInterval(() => {
-        SoundPlayer({ folder: "gameplay", audio: "fright" });
-      }, 900);
+      const frightSound = SoundPlayer({
+        folder: "gameplay",
+        audio: "fright",
+        loop: true,
+      });
+  
       const timer = setTimeout(() => {
         dispatch(setPacmanState(PacState.chop));
       }, 8000);
+  
       return () => {
         clearTimeout(timer);
-        clearInterval(interval);
+        frightSound.stop(); // stop the loop when effect is cleaned up
       };
     }
   }, [state, dispatch]);
+  
 
   useEffect(() => {
     if (
