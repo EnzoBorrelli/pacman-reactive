@@ -40,11 +40,11 @@ export default function DotController({ position, size, power }: iDotController)
         dispatch(removeDot({ x, y }));
 
         if (power) {
-          SoundPlayer({ folder: "gameplay", audio: "eat_dot_1", loop: false }); // chomp
+          SoundPlayer.PlaySound({ folder: "gameplay", audio: "eat_dot_1", loop: false }); // chomp
           dispatch(setGameScore(score + 50));
           dispatch(setPacmanState(PacState.power));
         } else {
-          SoundPlayer({ folder: "gameplay", audio: "eat_dot_0", loop: false }); // chomp
+          SoundPlayer.PlaySound({ folder: "gameplay", audio: "eat_dot_0", loop: false }); // chomp
           dispatch(setGameScore(score + 10));
         }              
       }

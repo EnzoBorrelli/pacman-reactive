@@ -23,12 +23,12 @@ export default function Button({
 
   const Click = () => {
     dispatch(setScene(scene));
-    SoundPlayer({ folder: soundData.folder, audio: soundData.audio });
+    SoundPlayer.PlaySound({ folder: soundData.folder, audio: soundData.audio });
     console.log(`i clicked: ${scene}`);
   };
   return (
     <button
-      onMouseEnter={() => SoundPlayer({ folder: "ui", audio: "hover" })}
+      onMouseEnter={() => SoundPlayer.PlaySound({ folder: "ui", audio: "hover" })}
       onClick={Click}
       className={style}
     >

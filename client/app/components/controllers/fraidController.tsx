@@ -39,7 +39,7 @@ export default function FraidController() {
     currentSiren.current?.stop();
 
     // Play new siren and store it
-    currentSiren.current = SoundPlayer({
+    currentSiren.current = SoundPlayer.PlaySound({
       folder: "gameplay",
       audio: siren,
       loop: true,

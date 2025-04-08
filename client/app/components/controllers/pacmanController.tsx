@@ -78,7 +78,7 @@ export default function PacmanController() {
         break;
       case "dead":
         setAnimation("dead");
-        SoundPlayer({ folder: "gameplay", audio: "death" });
+        SoundPlayer.PlaySound({ folder: "gameplay", audio: "death" });
         break;
       default:
         setAnimation("");

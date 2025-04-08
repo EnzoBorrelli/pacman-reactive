@@ -134,7 +134,7 @@ export default function GhostController({
       ) {
         dispatch(setGhostState(GhostState.eaten));
         dispatch(setGameScore(score + 200));
-        SoundPlayer({ folder: "gameplay", audio: "eat_ghost" });
+        SoundPlayer.PlaySound({ folder: "gameplay", audio: "eat_ghost" });
       } else if (ghost.state === GhostState.walking) {
         dispatch(setPacmanState(PacState.dead));
         console.log("💀");

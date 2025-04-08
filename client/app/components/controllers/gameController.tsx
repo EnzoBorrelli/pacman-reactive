@@ -35,7 +35,7 @@ export default function GameController() {
 
   useEffect(() => {
     if (state === PacState.power) {
-      const frightSound = SoundPlayer({
+      const frightSound = SoundPlayer.PlaySound({
         folder: "gameplay",
         audio: "fright",
         loop: true,

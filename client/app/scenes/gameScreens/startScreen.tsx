@@ -9,13 +9,13 @@ export default function StartScreen() {
 
   const Click = () => {
     dispatch(setGameState(GameStates.playing));
-    SoundPlayer({ folder: "ui", audio: "select" });
+    SoundPlayer.PlaySound({ folder: "ui", audio: "select" });
   };
   return (
     <div>
       <CharactersDisplay />
       <button
-        onMouseEnter={() => SoundPlayer({ folder: "ui", audio: "hover" })}
+        onMouseEnter={() => SoundPlayer.PlaySound({ folder: "ui", audio: "hover" })}
         onClick={Click}
         className="text-white mt-20 text-2xl hover:text-yellow-400"
       >
