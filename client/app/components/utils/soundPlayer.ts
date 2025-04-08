@@ -10,7 +10,7 @@ interface iSoundPlayer {
 
 const soundCache: Record<string, Howl> = {};
 
-export default function SoundPlayer({
+function PlaySound({
   folder,
   audio,
   volume = 1,
@@ -37,3 +37,10 @@ export default function SoundPlayer({
   howl.play();
   return howl;
 }
+
+
+function StopAllSounds(){
+  Howler.stop();
+}
+
+export default { PlaySound, StopAllSounds };
