@@ -7,12 +7,14 @@ import LoseScreen from "../../scenes/gameScreens/loseScreen";
 import WinScreen from "../../scenes/gameScreens/winScreen";
 import { useEffect } from "react";
 import { setGameHighScore } from "~/store/gameSlice";
+import soundPlayer from "../utils/soundPlayer";
 
 export default function StatesController() {
   const game = useSelector((state: RootState) => state.game);
   const dispatch = useDispatch();
   useEffect(() => {
     if (game.state === GameStates.win || game.state === GameStates.lose) {
+      soundPlayer.StopAllSounds();
       if (game.score > game.highScore) {
         dispatch(setGameHighScore(game.score));
       }
