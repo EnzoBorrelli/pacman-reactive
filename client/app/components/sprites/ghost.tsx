@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import { GhostState, GhostType } from "../enums/ghosts";
 import { CharacterSize, Direction } from "../enums/global";
+import useAnimation from "~/hooks/ghost/useAnimation";
 
 interface iGhost {
   type: GhostType;
@@ -9,43 +9,16 @@ interface iGhost {
   state: GhostState;
 }
 
-function useWalkAnimation(_ghost: string, interval = 150) {
-  const [currentFrame, setCurrentFrame] = useState(1);
 
-  useEffect(() => {
-    const animation = setInterval(() => {
-      setCurrentFrame((prev) => (prev === 1 ? 2 : 1));
-    }, interval);
 
-    return () => clearInterval(animation);
-  }, [interval]);
-
-  return `/assets/sprites/ghosts/body/${_ghost}_${currentFrame}.png`;
-}
-
-function useGhostCycle(ghosts = ["fright", "ghost"], switchInterval = 400) {
-  const [currentGhost, setCurrentGhost] = useState("fright");
-
-  useEffect(() => {
-    let index = 0;
-    const cycle = setInterval(() => {
-      index = index === 0 ? 1 : 0;
-      setCurrentGhost(ghosts[index]);
-    }, switchInterval);
-
-    return () => clearInterval(cycle);
-  }, [switchInterval]);
-
-  return currentGhost;
-}
 
 export default function Ghost({ type, size, direction, state }: iGhost) {
   const _direction = `/assets/sprites/ghosts/eyes/${direction}.png`;
-  const recoveringGhost = useGhostCycle();
+  const recoveringGhost = useAnimation.RecoverAnimation();
 
-  const walkSprite = useWalkAnimation(type);
-  const frightSprite = useWalkAnimation("fright");
-  const recoveringSprite = useWalkAnimation(recoveringGhost);
+  const walkSprite = useAnimation.WalkAnimation(type);
+  const frightSprite = useAnimation.WalkAnimation("fright");
+  const recoveringSprite = useAnimation.WalkAnimation(recoveringGhost);
 
   const bodySrc = (() => {
     switch (state) {
