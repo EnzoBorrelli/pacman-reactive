@@ -11,7 +11,7 @@ import CheckCollision from "../utils/checkCollision";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "~/store";
 import { PacState } from "../enums/pacman";
-import { Direction } from "../enums/global";
+import { CharacterSize, Direction } from "../enums/global";
 import { Scenes } from "../enums/scene";
 import { setGameState } from "~/store/gameSlice";
 import { GameStates } from "../enums/game";
@@ -43,22 +43,22 @@ export default function PacmanController() {
   useEffect(() => {
     switch (scene) {
       case Scenes.challengeMap:
-        dispatch(setPacmanSize(12));
+        dispatch(setPacmanSize(CharacterSize.challenge));
         dispatch(setPacmanPosition({ x: 24, y: 24 }));
         setSpeed(Math.round(4 * boost));
         break;
       case Scenes.classicMap:
-        dispatch(setPacmanSize(24));
+        dispatch(setPacmanSize(CharacterSize.classic));
         dispatch(setPacmanPosition({ x: 24, y: 24 }));
         setSpeed(Math.round(8 * boost));
         break;
       case Scenes.smallMap:
-        dispatch(setPacmanSize(36));
+        dispatch(setPacmanSize(CharacterSize.small));
         dispatch(setPacmanPosition(pacmanInitialPos.smallMap));
         setSpeed(Math.round(12 * boost));
         break;
       default:
-        dispatch(setPacmanSize(36));
+        dispatch(setPacmanSize(CharacterSize.small));
         dispatch(setPacmanPosition(pacmanInitialPos.smallMap));
         setSpeed(Math.round(12 * boost));
         break;

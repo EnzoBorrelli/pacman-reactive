@@ -8,6 +8,7 @@ import { classicDotsMatrix } from "../maps/dotLayout/classic";
 import { smallDotsMatrix } from "../maps/dotLayout/small";
 import { setGameState, setPreviousGameState } from "~/store/gameSlice";
 import { GameStates } from "../enums/game";
+import { objectSize } from "../enums/global";
 
 export default function ObjectsController() {
   const { tileSize, dotsLayout } = useSelector((state: RootState) => state.map);
@@ -45,18 +46,23 @@ export default function ObjectsController() {
 
   useEffect(() => {
     let selectedMatrix = classicDotsMatrix;
-    let selectedTileSize = 16;
+    let selectedTileSize = objectSize.classic;
     if (state === GameStates.playing && previousState === GameStates.start) {
       switch (scene) {
         case Scenes.smallMap:
           selectedMatrix = smallDotsMatrix;
-          selectedTileSize = 24;
+          selectedTileSize = objectSize.small;
           break;
       }
 
       dispatch(setMapDots({ layout: selectedMatrix }));
       dispatch(setTileSize(selectedTileSize));
       dispatch(setPreviousGameState(GameStates.playing));
+    }
+    if (state === GameStates.playing && previousState === GameStates.playing) {
+      if (allEatenDots) {
+        dispatch(setGameState(GameStates.win));
+      }
     }
   }, [scene, dispatch, state, previousState]);
 
@@ -65,14 +71,6 @@ export default function ObjectsController() {
     () => convertMatrixToDots(dotsLayout.layout, tileSize),
     [dotsLayout.layout, tileSize]
   );
-
-  useEffect(() => {
-    if (state === GameStates.playing && previousState === GameStates.playing) {
-      if (allEatenDots) {
-        dispatch(setGameState(GameStates.win));
-      }
-    }
-  }, [allEatenDots, dispatch, state, previousState]);
 
   return (
     <>
