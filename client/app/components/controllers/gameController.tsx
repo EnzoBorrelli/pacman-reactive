@@ -22,6 +22,7 @@ import {
 } from "~/store/gameSlice";
 import FraidController from "./fraidController";
 import Lives from "../ui/lives";
+import FruitController from "./fruitController";
 
 const gameDebug = false;
 
@@ -97,6 +98,7 @@ export default function GameController() {
       <MazeController />
       <ObjectsController />
       <FraidController />
+      <FruitController/>
       <Score score={game.score} />
       <Lives />
       {gameDebug ? (
