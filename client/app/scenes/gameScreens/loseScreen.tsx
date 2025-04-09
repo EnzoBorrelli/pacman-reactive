@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function LoseScreen() {
-  return <div>LoseScreen</div>;
+  return <div className="text-white">LoseScreen</div>;
 }
