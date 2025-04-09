@@ -4,7 +4,7 @@ import Dot from "../sprites/dot";
 import CheckCollision from "../utils/checkCollision";
 import { useEffect } from "react";
 import SoundPlayer from "../utils/soundPlayer";
-import { setGameScore } from "~/store/gameSlice";
+import { setGameDotsEaten, setGameScore } from "~/store/gameSlice";
 import { setPacmanState } from "~/store/pacmanSlice";
 import { PacState } from "../enums/pacman";
 import { removeDot } from "~/store/mapSlice";
@@ -18,6 +18,7 @@ interface iDotController {
 export default function DotController({ position, size, power }: iDotController) {
   const pacman = useSelector((state: RootState) => state.pacman);
   const score = useSelector((state: RootState) => state.game.score);
+  const dotsEaten = useSelector((state: RootState) => state.game.dotsEaten);
   const dotsLayout = useSelector((state: RootState) => state.map.dotsLayout.layout);
   const dispatch = useDispatch();
 
@@ -38,6 +39,7 @@ export default function DotController({ position, size, power }: iDotController)
       const { x, y } = dotToMatrix();
       if (dotsLayout[y]?.[x] !== 0) {
         dispatch(removeDot({ x, y }));
+        dispatch(setGameDotsEaten(dotsEaten+1))
 
         if (power) {
           SoundPlayer.PlaySound({ folder: "gameplay", audio: "eat_dot_1", loop: false }); // chomp
