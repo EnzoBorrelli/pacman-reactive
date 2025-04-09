@@ -23,6 +23,8 @@ import {
 import FraidController from "./fraidController";
 import Lives from "../ui/lives";
 
+const gameDebug = false;
+
 export default function GameController() {
   const { mapSize } = useSelector((state: RootState) => state.map);
   const { position, state } = useSelector((state: RootState) => state.pacman);
@@ -97,6 +99,23 @@ export default function GameController() {
       <FraidController />
       <Score score={game.score} />
       <Lives />
+      {gameDebug ? (
+        <div
+          className="text-white text-lg flex flex-col items-center"
+          style={{
+            position: "absolute",
+            top: "-30px",
+            right: "-280px",
+            zIndex: 100,
+          }}
+        >
+          <span>dotsEaten: {game.dotsEaten}</span>
+          <span>| state:{game.state} |</span>
+          <span>previousState:{game.previousState}</span>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
