@@ -7,7 +7,8 @@ export interface GameState {
   state: GameStates,
   score:number,
   highScore:number,
-  lives:number
+  lives:number,
+  dotsEaten:number
 }
 
 
@@ -17,7 +18,8 @@ const initialState: GameState = {
   state: GameStates.start,
   score: 0,
   highScore:0,
-  lives:3
+  lives:3,
+  dotsEaten:0
 };
 
 const gameSlice = createSlice({
@@ -39,8 +41,11 @@ const gameSlice = createSlice({
     setGameLives: (state, action: PayloadAction<number>) => {
       state.lives = action.payload;
     },
+    setGameDotsEaten: (state, action: PayloadAction<number>) => {
+      state.dotsEaten = action.payload;
+    },
   },
 });
 
-export const { setPreviousGameState,setGameState,setGameScore,setGameHighScore,setGameLives } = gameSlice.actions;
+export const { setPreviousGameState,setGameState,setGameScore,setGameHighScore,setGameLives,setGameDotsEaten } = gameSlice.actions;
 export default gameSlice.reducer;
