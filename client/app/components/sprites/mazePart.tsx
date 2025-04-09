@@ -1,36 +1,39 @@
+import { Direction, objectSize } from "../enums/global";
+import { Tiles } from "../enums/tiles";
+
 interface iMazePart {
-  rotation: string;
-  size: number;
-  type: string;
+  direction: Direction;
+  size: objectSize;
+  type: Tiles;
   isFlip?: boolean;
 }
 
-export default function MazePart({ rotation, size, type, isFlip }: iMazePart) {
+export default function MazePart({ direction, size, type, isFlip }: iMazePart) {
   let flip = isFlip ? "scale-x-[-1]" : "";
   let mazePart = `/assets/sprites/map/${type}.png`;
 
-  let _rotation: string;
+  let rotation: string;
 
-  switch (rotation) {
+  switch (direction) {
     case "left":
-      _rotation = "";
+      rotation = "";
       break;
     case "up":
-      _rotation = "rotate-90";
+      rotation = "rotate-90";
       break;
     case "right":
-      _rotation = "rotate-180";
+      rotation = "rotate-180";
       break;
     case "down":
-      _rotation = "-rotate-90";
+      rotation = "-rotate-90";
       break;
 
     default:
-      _rotation = "";
+      rotation = "";
       break;
   }
   return (
-    <div className={`${_rotation} ${flip}`}>
+    <div className={`${rotation} ${flip}`}>
       <img style={{ width: size, height: size }} src={mazePart} alt="tile" />
     </div>
   );

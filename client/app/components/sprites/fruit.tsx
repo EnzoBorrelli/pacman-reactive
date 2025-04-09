@@ -1,28 +1,16 @@
+import { objectSize } from "../enums/global";
+
 interface iFruit {
-  map: string;
+  size: objectSize;
   ID: number;
 }
 
-export default function Fruit({ map, ID }: iFruit) {
-  let size;
+export default function Fruit({ size, ID }: iFruit) {
   let fruit = `/assets/sprites/fruits/fruit_${ID}.png`;
-  switch (map) {
-    case "challenge":
-      size = "size-[32px]";
-      break;
-    case "classic":
-      size = "size-[48px]";
-      break;
-    case "small":
-      size = "size-[64px]";
-      break;
-    default:
-      size = "size-[32px]";
-      break;
-  }
+
   return (
     <div>
-      <img className={size} src={fruit} alt="fruit" />
+      <img style={{ width: size, height: size }} src={fruit} alt="fruit" />
     </div>
   );
 }

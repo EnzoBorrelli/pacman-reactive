@@ -3,9 +3,14 @@ import Ghost from "../components/sprites/ghost";
 import Pacman from "../components/sprites/pacman";
 import Fruit from "../components/sprites/fruit";
 import MazePart from "../components/sprites/mazePart";
-import { CharacterSize, Direction } from "~/components/enums/global";
+import {
+  CharacterSize,
+  Direction,
+  objectSize,
+} from "~/components/enums/global";
 import { PacState } from "~/components/enums/pacman";
 import { GhostState, GhostType } from "~/components/enums/ghosts";
+import { Tiles } from "~/components/enums/tiles";
 
 export default function Sprites() {
   return (
@@ -59,56 +64,200 @@ export default function Sprites() {
         />
       </div>
       <div className="flex items-center justify-center gap-6 mt-10">
-        <Fruit map="classic" ID={1} />
-        <Fruit map="classic" ID={2} />
-        <Fruit map="classic" ID={3} />
-        <Fruit map="classic" ID={4} />
-        <Fruit map="classic" ID={5} />
-        <Fruit map="classic" ID={6} />
-        <Fruit map="classic" ID={7} />
-        <Fruit map="classic" ID={8} />
+        <Fruit size={objectSize.small} ID={1} />
+        <Fruit size={objectSize.small} ID={2} />
+        <Fruit size={objectSize.small} ID={3} />
+        <Fruit size={objectSize.small} ID={4} />
+        <Fruit size={objectSize.small} ID={5} />
+        <Fruit size={objectSize.small} ID={6} />
+        <Fruit size={objectSize.small} ID={7} />
+        <Fruit size={objectSize.small} ID={8} />
       </div>
       <div className="flex items-center justify-center gap-6 mt-10">
-        <MazePart type="doubleWall" size={48} rotation="right" />
-        <MazePart type="doubleWall" size={48} rotation="down" />
-        <MazePart type="doubleWall" size={48} rotation="left" />
-        <MazePart type="doubleWall" size={48} rotation="up" />
-        <MazePart type="simpleWall" size={48} rotation="right" />
-        <MazePart type="simpleWall" size={48} rotation="down" />
-        <MazePart type="simpleWall" size={48} rotation="left" />
-        <MazePart type="simpleWall" size={48} rotation="up" />
-        <MazePart type="cornerWall" size={48} rotation="right" />
-        <MazePart type="cornerWall" size={48} rotation="down" />
-        <MazePart type="cornerWall" size={48} rotation="left" />
-        <MazePart type="cornerWall" size={48} rotation="up" />
+        <MazePart
+          type={Tiles.doubleWall}
+          size={objectSize.small}
+          direction={Direction.right}
+        />
+        <MazePart
+          type={Tiles.doubleWall}
+          size={objectSize.small}
+          direction={Direction.down}
+        />
+        <MazePart
+          type={Tiles.doubleWall}
+          size={objectSize.small}
+          direction={Direction.left}
+        />
+        <MazePart
+          type={Tiles.doubleWall}
+          size={objectSize.small}
+          direction={Direction.up}
+        />
+        <MazePart
+          type={Tiles.simpleWall}
+          size={objectSize.small}
+          direction={Direction.right}
+        />
+        <MazePart
+          type={Tiles.simpleWall}
+          size={objectSize.small}
+          direction={Direction.down}
+        />
+        <MazePart
+          type={Tiles.simpleWall}
+          size={objectSize.small}
+          direction={Direction.left}
+        />
+        <MazePart
+          type={Tiles.simpleWall}
+          size={objectSize.small}
+          direction={Direction.up}
+        />
+        <MazePart
+          type={Tiles.cornerWall}
+          size={objectSize.small}
+          direction={Direction.right}
+        />
+        <MazePart
+          type={Tiles.cornerWall}
+          size={objectSize.small}
+          direction={Direction.down}
+        />
+        <MazePart
+          type={Tiles.cornerWall}
+          size={objectSize.small}
+          direction={Direction.left}
+        />
+        <MazePart
+          type={Tiles.cornerWall}
+          size={objectSize.small}
+          direction={Direction.up}
+        />
       </div>
       <div className="flex items-center justify-center gap-6 mt-10">
-        <MazePart type="doubleCorner" size={48} rotation="right" />
-        <MazePart type="doubleCorner" size={48} rotation="down" />
-        <MazePart type="doubleCorner" size={48} rotation="left" />
-        <MazePart type="doubleCorner" size={48} rotation="up" />
-        <MazePart type="simpleCorner" size={48} rotation="right" />
-        <MazePart type="simpleCorner" size={48} rotation="down" />
-        <MazePart type="simpleCorner" size={48} rotation="left" />
-        <MazePart type="simpleCorner" size={48} rotation="up" />
-        <MazePart type="miniCorner" size={48} rotation="right" />
-        <MazePart type="miniCorner" size={48} rotation="down" />
-        <MazePart type="miniCorner" size={48} rotation="left" />
-        <MazePart type="miniCorner" size={48} rotation="up" />
+        <MazePart
+          type={Tiles.doubleCorner}
+          size={objectSize.small}
+          direction={Direction.right}
+        />
+        <MazePart
+          type={Tiles.doubleCorner}
+          size={objectSize.small}
+          direction={Direction.down}
+        />
+        <MazePart
+          type={Tiles.doubleCorner}
+          size={objectSize.small}
+          direction={Direction.left}
+        />
+        <MazePart
+          type={Tiles.doubleCorner}
+          size={objectSize.small}
+          direction={Direction.up}
+        />
+        <MazePart
+          type={Tiles.simpleCorner}
+          size={objectSize.small}
+          direction={Direction.right}
+        />
+        <MazePart
+          type={Tiles.simpleCorner}
+          size={objectSize.small}
+          direction={Direction.down}
+        />
+        <MazePart
+          type={Tiles.simpleCorner}
+          size={objectSize.small}
+          direction={Direction.left}
+        />
+        <MazePart
+          type={Tiles.simpleCorner}
+          size={objectSize.small}
+          direction={Direction.up}
+        />
+        <MazePart
+          type={Tiles.miniCorner}
+          size={objectSize.small}
+          direction={Direction.right}
+        />
+        <MazePart
+          type={Tiles.miniCorner}
+          size={objectSize.small}
+          direction={Direction.down}
+        />
+        <MazePart
+          type={Tiles.miniCorner}
+          size={objectSize.small}
+          direction={Direction.left}
+        />
+        <MazePart
+          type={Tiles.miniCorner}
+          size={objectSize.small}
+          direction={Direction.up}
+        />
       </div>
       <div className="flex items-center justify-center gap-6 mt-10">
-        <MazePart type="longCorner" size={48} rotation="right" />
-        <MazePart type="longCorner" size={48} rotation="down" />
-        <MazePart type="longCorner" size={48} rotation="left" />
-        <MazePart type="longCorner" size={48} rotation="up" />
-        <MazePart type="squareCorner" size={48} rotation="right" />
-        <MazePart type="squareCorner" size={48} rotation="down" />
-        <MazePart type="squareCorner" size={48} rotation="left" />
-        <MazePart type="squareCorner" size={48} rotation="up" />
-        <MazePart type="rectangle" size={48} rotation="right" />
-        <MazePart type="rectangle" size={48} rotation="down" />
-        <MazePart type="rectangle" size={48} rotation="left" />
-        <MazePart type="rectangle" size={48} rotation="up" />
+        <MazePart
+          type={Tiles.longCorner}
+          size={objectSize.small}
+          direction={Direction.right}
+        />
+        <MazePart
+          type={Tiles.longCorner}
+          size={objectSize.small}
+          direction={Direction.down}
+        />
+        <MazePart
+          type={Tiles.longCorner}
+          size={objectSize.small}
+          direction={Direction.left}
+        />
+        <MazePart
+          type={Tiles.longCorner}
+          size={objectSize.small}
+          direction={Direction.up}
+        />
+        <MazePart
+          type={Tiles.squareCorner}
+          size={objectSize.small}
+          direction={Direction.right}
+        />
+        <MazePart
+          type={Tiles.squareCorner}
+          size={objectSize.small}
+          direction={Direction.down}
+        />
+        <MazePart
+          type={Tiles.squareCorner}
+          size={objectSize.small}
+          direction={Direction.left}
+        />
+        <MazePart
+          type={Tiles.squareCorner}
+          size={objectSize.small}
+          direction={Direction.up}
+        />
+        <MazePart
+          type={Tiles.rectangle}
+          size={objectSize.small}
+          direction={Direction.right}
+        />
+        <MazePart
+          type={Tiles.rectangle}
+          size={objectSize.small}
+          direction={Direction.down}
+        />
+        <MazePart
+          type={Tiles.rectangle}
+          size={objectSize.small}
+          direction={Direction.left}
+        />
+        <MazePart
+          type={Tiles.rectangle}
+          size={objectSize.small}
+          direction={Direction.up}
+        />
       </div>
     </main>
   );
