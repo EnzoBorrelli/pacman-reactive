@@ -12,6 +12,7 @@ import { setGameScore } from "~/store/gameSlice";
 import SoundPlayer from "../utils/soundPlayer";
 import { setPacmanState } from "~/store/pacmanSlice";
 import { PacState } from "../enums/pacman";
+import { GameStates } from "../enums/game";
 
 type Position = { x: number; y: number };
 interface GhostControllerProps {
@@ -42,7 +43,7 @@ export default function GhostController({
 }: GhostControllerProps) {
   //selectors
   const { scene } = useSelector((state: RootState) => state.scene);
-  const { score } = useSelector((state: RootState) => state.game);
+  const { score,state } = useSelector((state: RootState) => state.game);
   const pacman = useSelector((state: RootState) => state.pacman);
   const dispatch = useDispatch();
 
@@ -114,7 +115,12 @@ export default function GhostController({
   
     const spawn = addPositions(initialPos, offset);
     dispatch(setGhostPosition(spawn));
-  }, [type, dispatch, ghost.size, initialPos]);
+
+    if (state === GameStates.lostLife) {
+      dispatch(setGhostState(GhostState.idle))
+      dispatch(setGhostPosition(spawn));
+    }
+  }, [type, dispatch, ghost.size, initialPos,state]);
   
 
   //set the ghost state reference to the current ghost state
@@ -155,6 +161,7 @@ export default function GhostController({
       }
     }
   }, [isColliding, ghost.state, dispatch, score]);
+  
 
   return (
     <span
