@@ -1,10 +1,12 @@
+import { Direction, objectSize } from "../enums/global";
+import { Tiles } from "../enums/tiles";
 import MazePart from "../sprites/mazePart";
 
 interface iTileController {
   position: { x: number; y: number };
-  type: string;
-  size: number;
-  rotation: string;
+  type: Tiles;
+  size: objectSize;
+  direction: Direction;
   isFlip: boolean;
 }
 
@@ -12,7 +14,7 @@ export default function TileController({
   position,
   type,
   size,
-  rotation,
+  direction,
   isFlip,
 }: iTileController) {
   const debug = false;
@@ -26,7 +28,7 @@ export default function TileController({
         zIndex: 1,
       }}
     >
-      <MazePart type={type} size={size} rotation={rotation} isFlip={isFlip} />
+      <MazePart type={type} size={size} direction={direction} isFlip={isFlip} />
     </span>
   );
 }

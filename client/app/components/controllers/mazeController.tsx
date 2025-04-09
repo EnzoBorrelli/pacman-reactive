@@ -41,7 +41,7 @@ export default function MazeController() {
           position={part.position}
           type={part.type}
           size={tileSize}
-          rotation={part.direction}
+          direction={part.direction}
           isFlip={part.flip!}
         />
       ))}
