@@ -7,11 +7,18 @@ export default function Score({ score }: { score: number }) {
 
   function UpgradeTier(scoreColor: scoreColors) {
     setColor(scoreColor);
-    soundPlayer.PlaySound({ folder: "gameplay", audio: "eat_ghost",loop: false });
+    soundPlayer.PlaySound({
+      folder: "gameplay",
+      audio: "eat_ghost",
+      loop: false,
+    });
   }
 
   useEffect(() => {
     switch (score) {
+      case 0:
+        setColor(scoreColors.common);
+        break;
       case 200:
         UpgradeTier(scoreColors.uncommon);
         break;
@@ -26,9 +33,6 @@ export default function Score({ score }: { score: number }) {
         break;
       case 5000:
         UpgradeTier(scoreColors.myth);
-        break;
-      default:
-        setColor(scoreColors.common);
         break;
     }
   }, [score]);
