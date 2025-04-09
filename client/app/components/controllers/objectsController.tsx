@@ -59,12 +59,12 @@ export default function ObjectsController() {
       dispatch(setTileSize(selectedTileSize));
       dispatch(setPreviousGameState(GameStates.playing));
     }
-    if (state === GameStates.playing && previousState === GameStates.playing) {
+    if (state === GameStates.playing || state === GameStates.lostLife) {
       if (allEatenDots) {
         dispatch(setGameState(GameStates.win));
       }
     }
-  }, [scene, dispatch, state, previousState]);
+  }, [scene, dispatch, state, previousState,allEatenDots]);
 
   // ✅ Use useMemo to avoid unnecessary re-renders
   const convertedDots = useMemo(
