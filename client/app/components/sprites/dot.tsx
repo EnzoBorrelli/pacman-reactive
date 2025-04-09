@@ -6,13 +6,14 @@ interface iDot {
 }
 
 export default function Dot({ size, isPower }: iDot) {
-  
+  const _size = isPower ? Math.round(size / 1.5) : Math.round(size / 4);
+
   return (
     <div
       className={`${isPower ? "rounded-full" : ""} bg-slate-50`}
       style={{
-        width: isPower ? Math.round(size / 1.5) : Math.round(size / 4),
-        height: isPower ? Math.round(size / 1.5) : Math.round(size / 4),
+        width: _size,
+        height: _size,
       }}
     ></div>
   );
