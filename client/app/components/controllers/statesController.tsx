@@ -25,6 +25,8 @@ export default function StatesController() {
       return <StartScreen />;
     case GameStates.playing:
       return <GameController />;
+    case GameStates.lostLife:
+      return <GameController />;
     case GameStates.lose:
       return <LoseScreen />;
     case GameStates.win:
