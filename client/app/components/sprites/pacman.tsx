@@ -26,25 +26,28 @@ export default function Pacman({ direction, size, animation }: iPacman) {
       break;
   }
 
-  function Animate() {
+  let animate;
     switch (animation) {
       case "chop":
-        return useAnimation.EatAnimation(80);
+        animate = useAnimation.EatAnimation(80);
+        break;
       case "power":
-        return useAnimation.EatAnimation(50);
+        animate = useAnimation.EatAnimation(50);
+        break;
       case "dead":
-        return useAnimation.DeathAnimation();
+        animate = useAnimation.DeathAnimation();
+        break;
       default:
-        return `/assets/sprites/pacman/phase_1.png`;
+        animate = `/assets/sprites/pacman/phase_1.png`;
     }
-  }
+  
 
   return (
     <div className={`${_direction}`}>
       <img
         style={{ width: size, height: size }}
-        src={Animate()}
-        alt="pacman"
+        src={animate}
+        alt="."
       />
     </div>
   );
