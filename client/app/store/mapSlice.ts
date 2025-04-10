@@ -73,11 +73,6 @@ const mapSlice = createSlice({
   },
 });
 
-export const selectAllEatenDots = createSelector(
-  [(state: RootState) => state.map.dotsLayout.layout],
-  (layout) => layout.every((row) => row.every((cell) => cell === 0))
-);
-
 export const {
   setMapTiles,
   addTile,
