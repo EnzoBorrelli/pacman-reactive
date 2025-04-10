@@ -1,25 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GameStates } from "~/components/enums/game";
 
-
 export interface GameState {
-  previousState: GameStates,
-  state: GameStates,
-  score:number,
-  highScore:number,
-  lives:number,
-  dotsEaten:number
+  previousState: GameStates;
+  state: GameStates;
+  score: number;
+  highScore: number;
+  lives: number;
+  dotsEaten: number;
+  level: number;
 }
-
-
 
 const initialState: GameState = {
   previousState: GameStates.start,
   state: GameStates.start,
   score: 0,
-  highScore:0,
-  lives:3,
-  dotsEaten:0
+  highScore: 0,
+  lives: 3,
+  dotsEaten: 0,
+  level: 0,
 };
 
 const gameSlice = createSlice({
@@ -44,8 +43,19 @@ const gameSlice = createSlice({
     setGameDotsEaten: (state, action: PayloadAction<number>) => {
       state.dotsEaten = action.payload;
     },
+    setGameLevel: (state, action: PayloadAction<number>) => {
+      state.level = action.payload;
+    },
   },
 });
 
-export const { setPreviousGameState,setGameState,setGameScore,setGameHighScore,setGameLives,setGameDotsEaten } = gameSlice.actions;
+export const {
+  setPreviousGameState,
+  setGameState,
+  setGameScore,
+  setGameHighScore,
+  setGameLives,
+  setGameDotsEaten,
+  setGameLevel,
+} = gameSlice.actions;
 export default gameSlice.reducer;
