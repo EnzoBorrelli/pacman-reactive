@@ -24,7 +24,7 @@ import FraidController from "./fraidController";
 import Lives from "../ui/lives";
 import FruitController from "./fruitController";
 
-const gameDebug = false;
+const gameDebug = true;
 
 export default function GameController() {
   const { mapSize } = useSelector((state: RootState) => state.map);
@@ -114,6 +114,7 @@ export default function GameController() {
           <span>dotsEaten: {game.dotsEaten}</span>
           <span>| state:{game.state} |</span>
           <span>previousState:{game.previousState}</span>
+          <span>level:{game.level}</span>
         </div>
       ) : (
         ""
