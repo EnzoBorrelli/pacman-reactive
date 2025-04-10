@@ -28,8 +28,7 @@ export default function PacmanController() {
   const [speed, setSpeed] = useState(12);
 
   const initialPosRef = useRef({ x: 0, y: 0 });
-
-  const boost = pacman.state === "power" ? 1.5 : 1;
+  const speedRef = useRef(speed);
 
   const [keyState, setKeyState] = useState({
     up: false,
@@ -50,27 +49,28 @@ export default function PacmanController() {
         dispatch(setPacmanSize(CharacterSize.challenge));
         dispatch(setPacmanPosition({ x: 24, y: 24 }));
         initialPosRef.current = pacmanInitialPos.smallMap;
-        setSpeed(Math.round(4 * boost));
+        setSpeed(Math.round(4));
         break;
       case Scenes.classicMap:
         dispatch(setPacmanSize(CharacterSize.classic));
         dispatch(setPacmanPosition({ x: 24, y: 24 }));
         initialPosRef.current = pacmanInitialPos.smallMap;
-        setSpeed(Math.round(8 * boost));
+        setSpeed(Math.round(8));
         break;
       case Scenes.smallMap:
         dispatch(setPacmanSize(CharacterSize.small));
         dispatch(setPacmanPosition(pacmanInitialPos.smallMap));
         initialPosRef.current = pacmanInitialPos.smallMap;
-        setSpeed(Math.round(12 * boost));
+        setSpeed(Math.round(12));
         break;
       default:
         dispatch(setPacmanSize(CharacterSize.small));
         dispatch(setPacmanPosition(pacmanInitialPos.smallMap));
         initialPosRef.current = pacmanInitialPos.smallMap;
-        setSpeed(Math.round(12 * boost));
+        setSpeed(Math.round(12));
         break;
     }
+    speedRef.current = speed;
   }, [scene, dispatch]);
   //**change animation depending on the state
   useEffect(() => {
@@ -184,6 +184,14 @@ export default function PacmanController() {
   }, [keyStateMemo, pacman.state, dispatch]);
 
   useEffect(() => {
+    if (pacman.state === PacState.power) {
+      setSpeed(Math.round(speed * 1.5));
+    } else if (pacman.state === PacState.chop) {
+      setSpeed(Math.round(speedRef.current));
+    }
+  }, [pacman.state, speed]);
+
+  useEffect(() => {
     const moveInterval = setInterval(() => {
       let newX = pacman.position.x;
       let newY = pacman.position.y;
@@ -233,8 +241,12 @@ export default function PacmanController() {
   ]);
 
   useEffect(() => {
-    if (game.state === GameStates.lostLife) {
-      dispatch(setPacmanState(PacState.idle))
+    if (
+      game.state === GameStates.lostLife ||
+      (game.state === GameStates.playing &&
+        game.previousState === GameStates.nextLevel)
+    ) {
+      dispatch(setPacmanState(PacState.idle));
       dispatch(setPacmanPosition(initialPosRef.current));
       dispatch(setPacmanDirection(Direction.right));
     }

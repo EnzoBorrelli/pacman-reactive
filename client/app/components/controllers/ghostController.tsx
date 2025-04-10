@@ -43,7 +43,7 @@ export default function GhostController({
 }: GhostControllerProps) {
   //selectors
   const { scene } = useSelector((state: RootState) => state.scene);
-  const { score,state } = useSelector((state: RootState) => state.game);
+  const { score, state } = useSelector((state: RootState) => state.game);
   const pacman = useSelector((state: RootState) => state.pacman);
   const dispatch = useDispatch();
 
@@ -97,7 +97,7 @@ export default function GhostController({
   //set the spawn position based on the ghost type
   useEffect(() => {
     let offset = { x: 0, y: 0 };
-  
+
     switch (type) {
       case GhostType.pinky:
         offset = { x: 0, y: 0 };
@@ -112,16 +112,15 @@ export default function GhostController({
         offset = { x: 0, y: -(ghost.size * 2) };
         break;
     }
-  
+
     const spawn = addPositions(initialPos, offset);
     dispatch(setGhostPosition(spawn));
 
-    if (state === GameStates.lostLife) {
-      dispatch(setGhostState(GhostState.idle))
+    if (state === GameStates.lostLife || state === GameStates.nextLevel) {
+      dispatch(setGhostState(GhostState.idle));
       dispatch(setGhostPosition(spawn));
     }
-  }, [type, dispatch, ghost.size, initialPos,state]);
-  
+  }, [type, dispatch, ghost.size, initialPos, state]);
 
   //set the ghost state reference to the current ghost state
   useEffect(() => {
@@ -161,7 +160,6 @@ export default function GhostController({
       }
     }
   }, [isColliding, ghost.state, dispatch, score]);
-  
 
   return (
     <span
