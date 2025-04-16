@@ -99,8 +99,8 @@ export default function GameController() {
       <ObjectsController />
       <FraidController />
       <FruitController/>
-      <Score score={game.score} />
-      <Lives />
+      <Score score={game.score} top="-30px" left="20px" />
+      <Lives  top="-30px" right="20px"/>
       {gameDebug ? (
         <div
           className="text-white text-lg flex flex-col items-center"
