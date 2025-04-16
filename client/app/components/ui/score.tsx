@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { scoreColors } from "../enums/game";
 import soundPlayer from "../utils/soundPlayer";
 
-export default function Score({ score }: { score: number }) {
+export default function Score({ score,top,left,isGlitched }: { score: number,top:string,left:string,isGlitched?:boolean }) {
   const [color, setColor] = useState(scoreColors.common);
 
   useEffect(() => {
@@ -39,12 +39,12 @@ export default function Score({ score }: { score: number }) {
       className={`${color} text-xl`}
       style={{
         position: "absolute",
-        top: "-30px",
-        left: "20px",
+        top: top,
+        left: left,
         zIndex: 100,
       }}
     >
-      score:{score}
+      {isGlitched ? (`score: ERROR`):(`score:${score}`)}
     </div>
   );
 }

@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { GameStates } from "~/components/enums/game";
+import GlitchedText from "~/components/ui/glitchedText";
+import Lives from "~/components/ui/lives";
+import Score from "~/components/ui/score";
+import WonSign from "~/components/ui/wonSign";
+import soundPlayer from "~/components/utils/soundPlayer";
 import { RootState } from "~/store";
 import {
   setGameLevel,
@@ -18,11 +23,34 @@ export default function WinScreen() {
   };
 
   return (
-    <div className="text-white">
-      <h1>YOU WON!</h1>
-      <h2>Level {game.level}</h2>
-      <h2>Score: {game.score}</h2>
-      <button onClick={handleNextLevel}>next level</button>
-    </div>
+    <main className="flex flex-col items-center w-full p-4 pt-20 h-wull text-white">
+      <WonSign level={game.level + 1} />
+      <Score score={game.score} top="150px" left="32%" isGlitched={game.level===255} />
+      <Lives top="150px" right="32%" isGlitched={game.level===255} />
+      {game.level === 255 ? (
+        <button
+          onMouseEnter={() =>
+            soundPlayer.PlaySound({ folder: "ui", audio: "hover" })
+          }
+          className="mt-20 text-lg flex items-center"
+          onClick={() => window.location.reload()}
+        >
+          <GlitchedText text="ţ̸̪̹̺̙͔͉̻̲̟̱̥̼̳͔̏̄͑̋̍̅̒̀̄̊͠͝ơ̵͓͎͉̝̭̭̣̠̅͋̈́̕ͅṈ̷̨̹̱̬̪͇͙̳̆̂͒̔͆̓ȇ̷̡̢̛̦̩͚̓̒̒̔͗̍̌͜x̴̛͇̳̖͑̽̅͑̔̐̽͘̕͝t̸̳͙͕̯̖̼͇̰͛̏̊͆̾Ḻ̵̨̡̨̗̗͔̹͚̱͂̊͋̎̈́̎̓̏̐͘ͅë̶̖̘̭̫́͑̓̈́͠v̷̨̜̜́͊̿̓́͝ͅe̸̘̱̞̐͛̎͋͌̕͝ļ̷̨̧̛̙̗̳̠̲͈̲̼̺̙̭͛̊̀͛̍̔͌͠ͅ" />
+        </button>
+      ) : (
+        <button
+          onMouseEnter={() =>
+            soundPlayer.PlaySound({ folder: "ui", audio: "hover" })
+          }
+          className="mt-20 text-lg group bg-slate-800 py-1 px-4 rounded-r-xl flex items-center gap-4 ring-2 ring-slate-500"
+          onClick={handleNextLevel}
+        >
+          TO NEXT LEVEL{" "}
+          <span className="inline-block transition-transform duration-200 group-hover:translate-x-2">
+            --&gt;
+          </span>
+        </button>
+      )}
+    </main>
   );
 }

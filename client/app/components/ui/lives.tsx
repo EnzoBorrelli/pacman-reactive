@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "~/store";
 
-export default function Lives() {
+export default function Lives({top,right,isGlitched }: {top:string,right:string,isGlitched?:boolean}) {
   const lives = useSelector((state: RootState) => state.game.lives);
 
   return (
@@ -9,8 +9,8 @@ export default function Lives() {
       className="text-white text-lg flex items-center"
       style={{
         position: "absolute",
-        top: "-30px",
-        right: "20px",
+        top: top,
+        right: right,
         zIndex: 100,
       }}
     >
@@ -18,6 +18,7 @@ export default function Lives() {
       <div className="flex gap-1 items-center">
         {Array.from({ length: lives }).map((_, index) => (
           <img
+          className={`${isGlitched ? "hue-rotate-180" : ""}`}
             key={index}
             style={{ width: 24, height: 24 }}
             src="/assets/sprites/pacman/phase_1.png"
