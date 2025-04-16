@@ -5,35 +5,33 @@ import soundPlayer from "../utils/soundPlayer";
 export default function Score({ score }: { score: number }) {
   const [color, setColor] = useState(scoreColors.common);
 
-  function UpgradeTier(scoreColor: scoreColors) {
-    setColor(scoreColor);
-    soundPlayer.PlaySound({
-      folder: "gameplay",
-      audio: "eat_ghost",
-      loop: false,
-    });
-  }
-
   useEffect(() => {
-    switch (score) {
-      case 0:
-        setColor(scoreColors.common);
-        break;
-      case 200:
-        UpgradeTier(scoreColors.uncommon);
-        break;
-      case 500:
-        UpgradeTier(scoreColors.rare);
-        break;
-      case 1000:
-        UpgradeTier(scoreColors.epic);
-        break;
-      case 2000:
-        UpgradeTier(scoreColors.legend);
-        break;
-      case 5000:
-        UpgradeTier(scoreColors.myth);
-        break;
+    if (
+      score === 1000 ||
+      score === 2000 ||
+      score === 5000 ||
+      score === 10000 ||
+      score === 20000
+    ) {
+      soundPlayer.PlaySound({
+        folder: "gameplay",
+        audio: "eat_ghost",
+        loop: false,
+      });
+    }
+
+    if (score >= 20000) {
+      setColor(scoreColors.myth);
+    } else if (score >= 10000) {
+      setColor(scoreColors.legend);
+    } else if (score >= 5000) {
+      setColor(scoreColors.epic);
+    } else if (score >= 2000) {
+      setColor(scoreColors.rare);
+    } else if (score >= 1000) {
+      setColor(scoreColors.uncommon);
+    } else {
+      setColor(scoreColors.common);
     }
   }, [score]);
   return (

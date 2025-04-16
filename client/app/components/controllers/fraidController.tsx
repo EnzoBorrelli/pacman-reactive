@@ -28,10 +28,10 @@ export default function FraidController() {
     }
 
     let siren = "siren0";
-    if (score >= 4000) siren = "siren4";
-    else if (score >= 3000) siren = "siren3";
-    else if (score >= 2000) siren = "siren2";
-    else if (score >= 1000) siren = "siren1";
+    if (score >= 20000) siren = "siren4";
+    else if (score >= 10000) siren = "siren3";
+    else if (score >= 5000) siren = "siren2";
+    else if (score >= 2000) siren = "siren1";
 
     if (currentSirenName.current === siren) return;
 
