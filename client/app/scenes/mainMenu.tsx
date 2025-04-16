@@ -51,7 +51,7 @@ export default function MainMenu() {
           © 1980 1990 NAMCO LTD | ALL RIGHTS RESERVED | CODED BY{" "}
           <a
             className="text-teal-600 hover:text-yellow-600"
-            href="https://enzo-borrelli-web.vercel.app/
+            href="https://endykaishi-web.vercel.app/
             "
             target="_blank"
             rel="noreferrer"
