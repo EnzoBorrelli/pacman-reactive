@@ -5,6 +5,7 @@ import { GameStates } from "~/components/enums/game";
 import { Scenes } from "~/components/enums/scene";
 import SceneDisplay from "~/components/sceneDisplay";
 import Button from "~/components/ui/button";
+import GameStateSwitch from "~/components/utils/debug/gameStateSwtich";
 import { RootState } from "~/store";
 import { setGameState, setPreviousGameState } from "~/store/gameSlice";
 
@@ -40,6 +41,7 @@ export default function Index() {
         label="Main Menu"
       />
       <SceneDisplay />
+      <GameStateSwitch isDebug={true}/>
     </main>
   );
 }
