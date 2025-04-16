@@ -44,34 +44,34 @@ export default function PacmanController() {
 
   //**change depending on the map
   useEffect(() => {
+    let baseSpeed = 12;
+
     switch (scene) {
       case Scenes.challengeMap:
         dispatch(setPacmanSize(CharacterSize.challenge));
         dispatch(setPacmanPosition({ x: 24, y: 24 }));
         initialPosRef.current = pacmanInitialPos.smallMap;
-        setSpeed(Math.round(4));
+        baseSpeed = 4;
         break;
       case Scenes.classicMap:
         dispatch(setPacmanSize(CharacterSize.classic));
         dispatch(setPacmanPosition({ x: 24, y: 24 }));
         initialPosRef.current = pacmanInitialPos.smallMap;
-        setSpeed(Math.round(8));
+        baseSpeed = 8;
         break;
       case Scenes.smallMap:
-        dispatch(setPacmanSize(CharacterSize.small));
-        dispatch(setPacmanPosition(pacmanInitialPos.smallMap));
-        initialPosRef.current = pacmanInitialPos.smallMap;
-        setSpeed(Math.round(12));
-        break;
       default:
         dispatch(setPacmanSize(CharacterSize.small));
         dispatch(setPacmanPosition(pacmanInitialPos.smallMap));
         initialPosRef.current = pacmanInitialPos.smallMap;
-        setSpeed(Math.round(12));
+        baseSpeed = 12;
         break;
     }
-    speedRef.current = speed;
+
+    speedRef.current = baseSpeed;
+    setSpeed(baseSpeed);
   }, [scene, dispatch]);
+
   //**change animation depending on the state
   useEffect(() => {
     switch (pacman.state) {
@@ -185,45 +185,70 @@ export default function PacmanController() {
 
   useEffect(() => {
     if (pacman.state === PacState.power) {
-      setSpeed(Math.round(speed * 1.5));
-    } else if (pacman.state === PacState.chop) {
-      setSpeed(Math.round(speedRef.current));
+      setSpeed(Math.round(speedRef.current * 1.5));
+    } else if (
+      pacman.state === PacState.chop ||
+      pacman.state === PacState.idle
+    ) {
+      setSpeed(speedRef.current);
     }
-  }, [pacman.state, speed]);
+  }, [pacman.state]);
 
   useEffect(() => {
     const moveInterval = setInterval(() => {
-      let newX = pacman.position.x;
-      let newY = pacman.position.y;
+      let { x: newX, y: newY } = pacman.position;
 
-      if (pacman.state !== PacState.dead) {
-        if (keyState.up) {
-          newY -= speed;
-          dispatch(setPacmanDirection(Direction.up));
-        } else if (keyState.down) {
-          newY += speed;
-          dispatch(setPacmanDirection(Direction.down));
-        } else if (keyState.left) {
-          newX -= speed;
-          dispatch(setPacmanDirection(Direction.left));
-        } else if (keyState.right) {
-          newX += speed;
-          dispatch(setPacmanDirection(Direction.right));
+      const direction = keyState.up
+        ? Direction.up
+        : keyState.down
+        ? Direction.down
+        : keyState.left
+        ? Direction.left
+        : keyState.right
+        ? Direction.right
+        : null;
+
+      if (direction && pacman.state !== PacState.dead) {
+        dispatch(setPacmanDirection(direction));
+
+        for (let i = 0; i < speed; i++) {
+          let tempX = newX;
+          let tempY = newY;
+
+          switch (direction) {
+            case Direction.up:
+              tempY -= 1;
+              break;
+            case Direction.down:
+              tempY += 1;
+              break;
+            case Direction.left:
+              tempX -= 1;
+              break;
+            case Direction.right:
+              tempX += 1;
+              break;
+          }
+
+          const newPos = { x: tempX, y: tempY };
+          const isColliding = tiles.some((tile: any) =>
+            CheckCollision({
+              objectA: newPos,
+              sizeA: pacman.size,
+              objectB: tile.position,
+              sizeB: tileSize,
+            })
+          );
+
+          if (!isColliding) {
+            newX = tempX;
+            newY = tempY;
+          } else {
+            break; // stop moving in this direction
+          }
         }
 
-        const newPos = { x: newX, y: newY };
-        const isColliding = tiles.some((part: any) =>
-          CheckCollision({
-            objectA: newPos,
-            sizeA: pacman.size,
-            objectB: part.position,
-            sizeB: tileSize,
-          })
-        );
-
-        if (!isColliding) {
-          dispatch(setPacmanPosition(newPos)); // ✅ Redux updates the state
-        }
+        dispatch(setPacmanPosition({ x: newX, y: newY }));
       }
     }, 16);
 
@@ -236,7 +261,6 @@ export default function PacmanController() {
     pacman.size,
     tileSize,
     pacman.position,
-    pacman.direction,
     pacman.state,
   ]);
 
