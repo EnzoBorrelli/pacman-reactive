@@ -195,6 +195,12 @@ export default function PacmanController() {
   }, [pacman.state]);
 
   useEffect(() => {
+    let levelSpeed = Math.round(speedRef.current + game.level / 10);
+    speedRef.current = levelSpeed;
+    setSpeed(levelSpeed);
+  }, [game.level]);
+
+  useEffect(() => {
     const moveInterval = setInterval(() => {
       let { x: newX, y: newY } = pacman.position;
 
