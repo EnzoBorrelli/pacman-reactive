@@ -3,7 +3,7 @@ import { GameStates } from "~/components/enums/game";
 import GlitchedText from "~/components/ui/glitchedText";
 import Lives from "~/components/ui/lives";
 import Score from "~/components/ui/score";
-import WonSign from "~/components/ui/wonSign";
+import ScreenSign from "~/components/ui/screenSign";
 import soundPlayer from "~/components/utils/soundPlayer";
 import { RootState } from "~/store";
 import {
@@ -24,7 +24,7 @@ export default function WinScreen() {
 
   return (
     <main className="flex flex-col items-center w-full p-4 pt-20 h-wull text-white">
-      <WonSign level={game.level + 1} />
+      <ScreenSign level={game.level + 1} />
       <Score score={game.score} top="150px" left="32%" isGlitched={game.level===255} />
       <Lives top="150px" right="32%" isGlitched={game.level===255} />
       {game.level === 255 ? (
