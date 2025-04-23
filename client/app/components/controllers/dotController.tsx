@@ -15,11 +15,17 @@ interface iDotController {
   power: boolean;
 }
 
-export default function DotController({ position, size, power }: iDotController) {
+export default function DotController({
+  position,
+  size,
+  power,
+}: iDotController) {
   const pacman = useSelector((state: RootState) => state.pacman);
-  const score = useSelector((state: RootState) => state.game.score);
+  const { score, level } = useSelector((state: RootState) => state.game);
   const dotsEaten = useSelector((state: RootState) => state.game.dotsEaten);
-  const dotsLayout = useSelector((state: RootState) => state.map.dotsLayout.layout);
+  const dotsLayout = useSelector(
+    (state: RootState) => state.map.dotsLayout.layout
+  );
   const dispatch = useDispatch();
 
   const isColliding = CheckCollision({
@@ -39,16 +45,24 @@ export default function DotController({ position, size, power }: iDotController)
       const { x, y } = dotToMatrix();
       if (dotsLayout[y]?.[x] !== 0) {
         dispatch(removeDot({ x, y }));
-        dispatch(setGameDotsEaten(dotsEaten+1))
+        dispatch(setGameDotsEaten(dotsEaten + 1));
 
         if (power) {
-          SoundPlayer.PlaySound({ folder: "gameplay", audio: "eat_dot_1", loop: false }); // chomp
+          SoundPlayer.PlaySound({
+            folder: "gameplay",
+            audio: "eat_dot_1",
+            loop: false,
+          }); // chomp
           dispatch(setGameScore(score + 50));
-          dispatch(setPacmanState(PacState.power));
+          if (level < 19) dispatch(setPacmanState(PacState.power));
         } else {
-          SoundPlayer.PlaySound({ folder: "gameplay", audio: "eat_dot_0", loop: false }); // chomp
+          SoundPlayer.PlaySound({
+            folder: "gameplay",
+            audio: "eat_dot_0",
+            loop: false,
+          }); // chomp
           dispatch(setGameScore(score + 10));
-        }              
+        }
       }
     }
   }, [isColliding]); // ✅ No unnecessary dependencies
