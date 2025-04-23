@@ -24,7 +24,7 @@ import FraidController from "./fraidController";
 import Lives from "../ui/lives";
 import FruitController from "./fruitController";
 
-const gameDebug = true;
+const gameDebug = false;
 
 export default function GameController() {
   const { mapSize } = useSelector((state: RootState) => state.map);
