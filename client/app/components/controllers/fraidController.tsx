@@ -14,10 +14,24 @@ export default function FraidController() {
   const inky = useSelector((state: RootState) => state.inky);
   const pinky = useSelector((state: RootState) => state.pinky);
   const clyde = useSelector((state: RootState) => state.clyde);
-  const score = useSelector((state: RootState) => state.game.score);
+  const dotsEaten = useSelector((state: RootState) => state.game.dotsEaten);
+  const dotsLayout = useSelector((state: RootState) => state.map.dotsLayout);
 
   const currentSiren = useRef<Howl | null>(null);
   const currentSirenName = useRef<string>("");
+
+  const dotsCount = (matrix: number[][]) => {
+    let count = 0;
+    for (const row of matrix) {
+      for (const cell of row) {
+        if (cell === 1 || cell === 2) count++;
+      }
+    }
+    return count;
+  };
+
+  const totalDots = dotsCount(dotsLayout.layout);
+  
 
   useEffect(() => {
     if (blinky.state !== GhostState.walking) {
@@ -28,13 +42,12 @@ export default function FraidController() {
     }
 
     let siren = "siren0";
-    if (score >= 20000) siren = "siren4";
-    else if (score >= 10000) siren = "siren3";
-    else if (score >= 5000) siren = "siren2";
-    else if (score >= 2000) siren = "siren1";
+    if (dotsEaten > Math.floor(totalDots * 2.5)) siren = "siren4";
+    else if (dotsEaten > Math.floor(totalDots * 1.7)) siren = "siren3";
+    else if (dotsEaten > Math.floor(totalDots * 0.7)) siren = "siren2";
+    else if (dotsEaten > Math.floor(totalDots * 0.3)) siren = "siren1";
 
     if (currentSirenName.current === siren) return;
-
     // Stop old siren
     currentSiren.current?.stop();
 
@@ -47,7 +60,7 @@ export default function FraidController() {
     });
 
     currentSirenName.current = siren;
-  }, [blinky.state, score]);
+  }, [blinky.state, dotsEaten]);
 
   return (
     <>
