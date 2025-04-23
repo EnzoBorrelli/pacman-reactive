@@ -45,13 +45,23 @@ export default function GhostController({
   const { scene } = useSelector((state: RootState) => state.scene);
   const { score, state } = useSelector((state: RootState) => state.game);
   const pacman = useSelector((state: RootState) => state.pacman);
+  const { tiles, tileSize,mapSize } = useSelector((state: RootState) => state.map);
   const dispatch = useDispatch();
 
   //states
   const [initialPos, setInitialPos] = useState({ x: 0, y: 0 });
+  const [vkeyState, setVKeyState] = useState({
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+  });
+  const [opositeVkey, setOpositeVkey] = useState(Direction.down);
+  const [toSolidBlock, setToSolidBlock] = useState(Direction.down);
 
   //refs
   const ghostStateRef = useRef(ghost.state);
+  const speed = 12;
 
   //functions
   function addPositions(p1: Position, p2: Position): Position {
@@ -60,6 +70,123 @@ export default function GhostController({
       y: p1.y + p2.y,
     };
   }
+
+  function lockOpositeKey(direction: Direction) {
+    switch (direction) {
+      case Direction.down:
+        setOpositeVkey(Direction.up);
+        break;
+      case Direction.up:
+        setOpositeVkey(Direction.down);
+        break;
+      case Direction.right:
+        setOpositeVkey(Direction.left);
+        break;
+      case Direction.left:
+        setOpositeVkey(Direction.right);
+        break;
+    }
+  }
+  //** Handle vkey inputs
+  useEffect(() => {
+    const directions = [
+      Direction.up,
+      Direction.down,
+      Direction.left,
+      Direction.right,
+    ];
+
+    const interval = setInterval(() => {
+      const randomDirection =
+        directions[Math.floor(Math.random() * directions.length)];
+
+      // Directly set the state based on chosen direction
+      setVKeyState({
+        up: randomDirection === Direction.up,
+        down: randomDirection === Direction.down,
+        left: randomDirection === Direction.left,
+        right: randomDirection === Direction.right,
+      });
+    }, 32); // changed to 200ms for visibility, can go back to 16
+
+    return () => {
+      clearInterval(interval);
+      setVKeyState({ up: false, down: false, left: false, right: false });
+    };
+  }, []);
+
+  useEffect(() => {
+    const moveInterval = setInterval(() => {
+      let { x: newX, y: newY } = ghost.position;
+
+      let direction: Direction | null = null;
+      if (vkeyState.up) direction = Direction.up;
+      else if (vkeyState.down) direction = Direction.down;
+      else if (vkeyState.left) direction = Direction.left;
+      else if (vkeyState.right) direction = Direction.right;
+
+      if (!direction) return; // exit early if no direction is active
+
+      if (
+        direction &&
+        ghost.state !== GhostState.idle &&
+        direction !== opositeVkey &&
+        direction !== toSolidBlock
+      ) {
+        dispatch(setGhostDirection(direction));
+
+        let tempX = newX;
+        let tempY = newY;
+
+        switch (direction) {
+          case Direction.up:
+            tempY -= speed;
+            break;
+          case Direction.down:
+            tempY += speed;
+            break;
+          case Direction.left:
+            tempX -= speed;
+            break;
+          case Direction.right:
+            tempX += speed;
+            break;
+        }
+
+        const newPos = { x: tempX, y: tempY };
+        const isColliding = tiles.some((tile: any) =>
+          CheckCollision({
+            objectA: newPos,
+            sizeA: ghost.size,
+            objectB: tile.position,
+            sizeB: tileSize,
+          })
+        );
+
+        if (!isColliding) {
+          newX = tempX;
+          newY = tempY;
+          lockOpositeKey(direction); // set the opposite key to the current direction
+        } else {
+          setToSolidBlock(direction); // set the direction to the solid block
+          return; // stop moving in this direction
+        }
+
+        dispatch(setGhostPosition({ x: newX, y: newY }));
+      }
+    }, 16);
+
+    return () => clearInterval(moveInterval);
+  }, [
+    dispatch,
+    vkeyState,
+    speed,
+    tiles,
+    pacman.size,
+    tileSize,
+    pacman.position,
+    pacman.state,
+  ]);
 
   const isColliding = CheckCollision({
     objectA: pacman.position,
@@ -160,6 +287,18 @@ export default function GhostController({
       }
     }
   }, [isColliding, ghost.state, dispatch, score]);
+
+  useEffect(() => {
+      if (state === GameStates.playing) {
+        if (ghost.position.x <= 0) {
+          dispatch(setGhostPosition({ x: mapSize.x - 12, y: ghost.position.y }));
+        }
+        if (ghost.position.x >= mapSize.x) {
+          dispatch(setGhostPosition({ x: 12, y: ghost.position.y }));
+        }
+      }
+      
+    }, [ghost.position, dispatch, state]);
 
   return (
     <span
