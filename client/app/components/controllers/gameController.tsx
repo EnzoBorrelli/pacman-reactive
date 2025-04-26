@@ -97,7 +97,7 @@ export default function GameController() {
       <PacmanController />
       <MazeController />
       <ObjectsController />
-      <FraidController />
+      {/*<FraidController />*/}
       <FruitController/>
       <Score score={game.score} top="-30px" left="20px" />
       <Lives  top="-30px" right="20px"/>

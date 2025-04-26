@@ -17,7 +17,7 @@ export default function TileController({
   direction,
   isFlip,
 }: iTileController) {
-  const debug = false;
+  const debug = true;
   return (
     <span
     className={debug ? "ring-1 ring-red-500" : ""}
