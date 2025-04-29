@@ -9,19 +9,16 @@ export default function CheckCollision({objectA, sizeA, objectB, sizeB}: iCheckC
 
   const objectACenterX = objectA.x + sizeA / 2;
   const objectACenterY = objectA.y + sizeA / 2;
-  const objectARadius = sizeA / 8; // Para detección circular (más precisa)
+  const objectARadius =1; // Para detección circular (más precisa)
 
   // Definir los bordes de la pared
-  const objectBLeft = objectB.x;
-  const objectBRight = objectB.x + sizeB;
-  const objectBTop = objectB.y;
-  const objectBBottom = objectB.y + sizeB;
+  
 
   // Verificar colisión
   return (
-    objectACenterX + Math.round(objectARadius / 1.32) > objectBLeft &&
-    objectACenterX - objectARadius < objectBRight &&
-    objectACenterY + objectARadius > objectBTop &&
-    objectACenterY - objectARadius < objectBBottom
+    objectACenterX + objectARadius >= objectB.x &&
+    objectACenterX - objectARadius <= objectB.x + sizeB &&
+    objectACenterY + objectARadius >= objectB.y &&
+    objectACenterY - objectARadius <= objectB.y + sizeB
   );
 }

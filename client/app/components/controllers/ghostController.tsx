@@ -45,7 +45,9 @@ export default function GhostController({
   const { scene } = useSelector((state: RootState) => state.scene);
   const { score, state } = useSelector((state: RootState) => state.game);
   const pacman = useSelector((state: RootState) => state.pacman);
-  const { tiles, tileSize,mapSize } = useSelector((state: RootState) => state.map);
+  const { tiles, tileSize, mapSize } = useSelector(
+    (state: RootState) => state.map
+  );
   const dispatch = useDispatch();
 
   //states
@@ -137,23 +139,29 @@ export default function GhostController({
 
         let tempX = newX;
         let tempY = newY;
+        let collX = newX;
+        let collY = newY;
 
         switch (direction) {
           case Direction.up:
             tempY -= speed;
+            collY -= speed * 2;
             break;
           case Direction.down:
             tempY += speed;
+            collY += speed * 2;
             break;
           case Direction.left:
             tempX -= speed;
+            collX -= speed * 2;
             break;
           case Direction.right:
             tempX += speed;
+            collX += speed * 2;
             break;
         }
 
-        const newPos = { x: tempX, y: tempY };
+        const newPos = { x: collX, y: collY };
         const isColliding = tiles.some((tile: any) =>
           CheckCollision({
             objectA: newPos,
@@ -289,16 +297,15 @@ export default function GhostController({
   }, [isColliding, ghost.state, dispatch, score]);
 
   useEffect(() => {
-      if (state === GameStates.playing) {
-        if (ghost.position.x <= 0) {
-          dispatch(setGhostPosition({ x: mapSize.x - 12, y: ghost.position.y }));
-        }
-        if (ghost.position.x >= mapSize.x) {
-          dispatch(setGhostPosition({ x: 12, y: ghost.position.y }));
-        }
+    if (state === GameStates.playing) {
+      if (ghost.position.x <= 0) {
+        dispatch(setGhostPosition({ x: mapSize.x - 12, y: ghost.position.y }));
       }
-      
-    }, [ghost.position, dispatch, state]);
+      if (ghost.position.x >= mapSize.x) {
+        dispatch(setGhostPosition({ x: 12, y: ghost.position.y }));
+      }
+    }
+  }, [ghost.position, dispatch, state]);
 
   return (
     <span
